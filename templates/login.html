@@ -1,0 +1,5 @@
+{% extends 'base.html' %} {% block content %} {% from 'bootstrap5/form.html' import render_form %}
+
+<h1>Login</h1>
+
+{{ render_form(form) }} {{ bootstrap.load_css() }} {{ bootstrap.load_icon_font_css() }} {% endblock %}
