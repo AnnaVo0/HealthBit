@@ -1,12 +1,12 @@
 {% from 'bootstrap5/nav.html' import render_nav_item %} {% from 'bootstrap5/utils.html' import render_messages %} {% from 'bootstrap5/form.html' import render_form %}
 
 <!--
-    base.html will (probably) extend every other page in the app. It is essentially just the navbar, then the main section of the page
+    base.html will extend every other HTML page in the app. It is essentially just the navbar, then the main section of the page
     -gets overriden by other child pages.
 
-    '{% block content %}{% endblock %}' is Flask's way of letting other pages extended from this page override
-    -that particular "block" of the page. Aka, when you see '{% block content %}{% endblock %}' in other pages extended from this page, like login.html or register.html,
-    -whatever is inside their block content will replace the block content of this page (i.e., their contents will be put inside main here and display below the navbar).
+    block content and endblock is Flask's way of letting other pages extended from this page override
+    -that particular "block" of the page. Aka, when you see block content and endblock in curly braces and % symbols in other pages extended from this page, like login.html or register.html,
+    -whatever is inside them will replace the block content of this page (i.e., their contents will be put inside main here and display below the navbar).
 -->
 
 <!doctype html>
