@@ -1,3 +1,10 @@
+'''
+    HOW TO RUN:
+    
+    1. Run 'pip install -r requirements.txt' to download all current dependencies, activate venv if using one
+    2. Run app.py like a normal python app using the python command
+
+'''
 from enum import Enum
 from flask import Flask, render_template, request, flash, redirect, url_for
 from markupsafe import Markup
