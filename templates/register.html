@@ -2,8 +2,8 @@
 
 <h1>Register</h1>
 
-{{ render_form(form) }} {{ bootstrap.load_css() }} {{ bootstrap.load_icon_font_css() }} 
+{{ render_form(form) }} {{ bootstrap.load_css() }} {{ bootstrap.load_icon_font_css() }}
 
-<p class="mt-3">Already have an account? Login <a href="{{url_for('login')}}">here.</a></p>
+<p class="mt-3">Already have an account? Login <a href="{{url_for('main.login')}}">here.</a></p>
 
 {% endblock %}
