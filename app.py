@@ -30,12 +30,18 @@ bootstrap = Bootstrap5(app)
 db = SQLAlchemy(app)
 csrf = CSRFProtect(app)
 
+# Should probably move these classes to their own file(s)
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
     password = PasswordField('Password', validators=[DataRequired(), Length(8, 150)])
     remember = BooleanField('Remember me')
     submit = SubmitField()
-    
+
+class RegisterForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
+    password = PasswordField('Password', validators=[DataRequired(), Length(8, 150)])
+    submit = SubmitField()
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -44,6 +50,9 @@ def index():
 def login():
     return render_template('login.html', form = LoginForm())
 
+@app.route('/register')
+def register():
+    return render_template('register.html', form = RegisterForm())
 
 if __name__ == '__main__':
     app.run(debug=True)
