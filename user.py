@@ -1,15 +1,7 @@
 from app import app, db
-from flask_login import LoginManager, UserMixin
+from flask_login import LoginManager
 
-usernameMinLen = 4
-usernameMaxLen = 20
-pwdMinLen = 8
-pwdMaxLen = 150
-
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(usernameMaxLen), nullable=False, unique=True)
-    password = db.Column(db.String(pwdMaxLen), nullable=False)
+from database import User
     
 login_manager = LoginManager()
 login_manager.init_app(app)

@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Length, ValidationError
 from wtforms.fields import StringField, PasswordField, BooleanField, SubmitField
-from user import User, usernameMinLen, usernameMaxLen, pwdMinLen, pwdMaxLen
+from database import User
+from config import usernameMinLen, usernameMaxLen, pwdMaxLen, pwdMinLen
 from app import db
 
 class LoginForm(FlaskForm):
