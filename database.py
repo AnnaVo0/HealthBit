@@ -51,6 +51,12 @@ class User(db.Model, UserMixin):
         if end_date:
             query = query.filter(BowelMovementEntry.timestamp <= end_date)
         return query.all()
+
+    def get_sleep_entries(self, start_date=None, end_date=None):
+        pass
+
+    def get_urine_entries(self, start_date=None, end_date=None):
+        pass
     
 class Entry(db.Model):
     __tablename__ = "entries"
@@ -104,3 +110,9 @@ class BowelMovementEntry(Entry):
     stool_color = db.Column(db.String(100))
 
     __mapper_args__ = {"polymorphic_identity": "bowel_movement"}
+
+class SleepEntry(Entry):
+    pass
+
+class UrineEntry(Entry):
+    pass
