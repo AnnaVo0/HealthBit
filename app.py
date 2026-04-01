@@ -2,7 +2,7 @@
     HOW TO RUN:
     
     1. Run 'pip install -r requirements.txt' to download all current dependencies, activate venv if using one
-    2. Run app.py using the python command
+    2. Run app.py using the command 'flask run'
 
 '''
 from flask import Flask
