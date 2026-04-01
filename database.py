@@ -11,7 +11,47 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(pwdMaxLen), nullable=False)
     
     entries = relationship("Entry", backref="user", cascade="all, delete-orphan")
+    
+    def get_food_entries(self, start_date=None, end_date=None):
+        query = FoodEntry.query.filter_by(user_id=self.id)
+        if start_date:
+            query = query.filter(FoodEntry.timestamp >= start_date)
+        if end_date:
+            query = query.filter(FoodEntry.timestamp <= end_date)
+        return query.all()
 
+    def get_water_entries(self, start_date=None, end_date=None):
+        query = WaterEntry.query.filter_by(user_id=self.id)
+        if start_date:
+            query = query.filter(WaterEntry.timestamp >= start_date)
+        if end_date:
+            query = query.filter(WaterEntry.timestamp <= end_date)
+        return query.all()
+        
+    def get_weight_entries(self, start_date=None, end_date=None):
+        query = WeightEntry.query.filter_by(user_id=self.id)
+        if start_date:
+            query = query.filter(WeightEntry.timestamp >= start_date)
+        if end_date:
+            query = query.filter(WeightEntry.timestamp <= end_date)
+        return query.all()
+
+    def get_exercise_entries(self, start_date=None, end_date=None):
+        query = ExerciseEntry.query.filter_by(user_id=self.id)
+        if start_date:
+            query = query.filter(ExerciseEntry.timestamp >= start_date)
+        if end_date:
+            query = query.filter(ExerciseEntry.timestamp <= end_date)
+        return query.all()
+
+    def get_bowel_movement_entries(self, start_date=None, end_date=None):
+        query = BowelMovementEntry.query.filter_by(user_id=self.id)
+        if start_date:
+            query = query.filter(BowelMovementEntry.timestamp >= start_date)
+        if end_date:
+            query = query.filter(BowelMovementEntry.timestamp <= end_date)
+        return query.all()
+    
 class Entry(db.Model):
     __tablename__ = "entries"
     
