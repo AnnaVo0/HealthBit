@@ -14,9 +14,14 @@ class LoginForm(FlaskForm):
 class RegisterForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(usernameMinLen, usernameMaxLen)])
     password = PasswordField('Password', validators=[DataRequired(), Length(pwdMinLen, pwdMaxLen)])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired()])
     submit = SubmitField('Register')
 
     def validate_username(self, username):
         existing_user = db.session.execute(db.select(User).filter_by(username = username.data)).first()
         if existing_user:
             raise ValidationError('The username you have entered already exists. Please re-enter a new one.')
+
+    def validate_confirm_password(self, confirm_password):
+        if self.password.data != confirm_password.data:
+            raise ValidationError('Passwords must match.')
