@@ -1,8 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_user, logout_user, login_required
-from user import User
+from database import db, User
 from forms import LoginForm, RegisterForm
-from app import db
 import bcrypt
 
 main = Blueprint('main', __name__)
@@ -34,7 +33,7 @@ def login():
     
     if login_form.validate_on_submit():
         # Note: db.session.execute() does not work for the below line, for some reason, do not use it for this query in particular
-        user = User.query.filter_by(username = login_form.username.data).first()
+        user = User.query.filter_by(username=login_form.username.data).first()
         
         if user and bcrypt.checkpw(login_form.password.data.encode('utf-8'), user.password):
             login_user(user, remember=login_form.remember.data)
@@ -44,7 +43,7 @@ def login():
         login_form.username.errors.append('')
         login_form.password.errors.append('The username and/or password you have entered is incorrect. Please try again.')
         
-    return render_template('login.html', form = login_form)
+    return render_template('login.html', form=login_form)
 
 @main.route('/logout')
 @login_required
