@@ -1,4 +1,5 @@
-from app import app, db
+from app import app
+from database import db
 import pytest
 from database import User, FoodEntry, WaterEntry, BowelMovementEntry, ExerciseEntry, WeightEntry
 
@@ -78,22 +79,22 @@ def test_weight_entry(client, lbs):
 def test_exercise_entry(client, name, mins, cals):
     user = client.query(User).filter_by(username="testuser").first()
     
-    entry = ExerciseEntry(user_id=user.id, exercise_name=name, minutes=mins, calories=cals)
+    entry = ExerciseEntry(user_id=user.id, exercise_name=name, minutes=mins, calories_burned=cals)
     client.add(entry)
     client.commit()
     
-    result = client.query(ExerciseEntry).filter_by(exercise_name=name, minutes=mins, calories=cals).first()
+    result = client.query(ExerciseEntry).filter_by(exercise_name=name, minutes=mins, calories_burned=cals).first()
     assert result is not None
     assert result.exercise_name == name
     assert result.minutes == mins
-    assert result.calories == cals
+    assert result.calories_burned == cals
     
 @pytest.mark.parametrize("typ, desc, color", [
     ("One", "Soft", "Brown"),
     ("One", "Solid", "Green"),
     ("Two", "Solid", "Light Brown"),
 ])
-def test_exercise_entry(client, typ, desc, color):
+def test_bowel_movement_entry(client, typ, desc, color):
     user = client.query(User).filter_by(username="testuser").first()
     
     entry = BowelMovementEntry(user_id=user.id, stool_type=typ, stool_description=desc, stool_color=color)
