@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{# colors from https://www.dreamstime.com/colour-scheme-combinations-hex-codes-names-color-grading-spectrum-color-swatches-pastel-rainbow-shades-d-light-image369757983 #}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Welcome, {{ current_user.username }}!</h1>
+    <button class="btn btn-secondary">+ Add Module</button>
+</div>
+
+<div class="row g-4">
+
+    <!-- Food Module -->
+    <div class="col-md-3">
+        <div class="card h-100" style="background-color: #FFEB99;">
+            <div class="card-body text-center">
+                <h5 class="card-title">Food</h5>
+                <p class="card-text text-muted">Today: No entries yet.</p>
+                <button class="btn btn-sm btn-secondary">Log Food</button>
+            </div>
+            <div class="card-footer bg-transparent border-0 text-end">
+                <button class="btn btn-sm btn-outline-dark">Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Water Module -->
+    <div class="col-md-3">
+        <div class="card h-100" style="background-color: #C1ECF8;">
+            <div class="card-body text-center">
+                <h5 class="card-title">Water</h5>
+                <p class="card-text text-muted">Today: No entries yet.</p>
+                <button class="btn btn-sm btn-secondary">Log Water</button>
+            </div>
+            <div class="card-footer bg-transparent border-0 text-end">
+                <button class="btn btn-sm btn-outline-dark">Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weight Module -->
+    <div class="col-md-3">
+        <div class="card h-100" style="background-color: #F4D6FF;">
+            <div class="card-body text-center">
+                <h5 class="card-title">Weight</h5>
+                <p class="card-text text-muted">Today: No entries yet.</p>
+                <button class="btn btn-sm btn-secondary">Log Weight</button>
+            </div>
+            <div class="card-footer bg-transparent border-0 text-end">
+                <button class="btn btn-sm btn-outline-dark">Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exercise Module -->
+    <div class="col-md-3">
+        <div class="card h-100" style="background-color: #A9E3BF;">
+            <div class="card-body text-center">
+                <h5 class="card-title">Exercise</h5>
+                <p class="card-text text-muted">Today: No entries yet.</p>
+                <button class="btn btn-sm btn-secondary">Log Exercise</button>
+            </div>
+            <div class="card-footer bg-transparent border-0 text-end">
+                <button class="btn btn-sm btn-outline-dark">Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bowel Movement Module -->
+    <div class="col-md-3">
+        <div class="card h-100" style="background-color: #FFCC99;">
+            <div class="card-body text-center">
+                <h5 class="card-title">Bowel Movement</h5>
+                <p class="card-text text-muted">Today: No entries yet.</p>
+                <button class="btn btn-sm btn-secondary">Log Bowel Movement</button>
+            </div>
+            <div class="card-footer bg-transparent border-0 text-end">
+                <button class="btn btn-sm btn-outline-dark">Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sleep Module -->
+    <div class="col-md-3">
+        <div class="card h-100" style="background-color: #B9B8FF;">
+            <div class="card-body text-center">
+                <h5 class="card-title">Sleep</h5>
+                <p class="card-text text-muted">Today: No entries yet.</p>
+                <button class="btn btn-sm btn-secondary">Log Sleep</button>
+            </div>
+            <div class="card-footer bg-transparent border-0 text-end">
+                <button class="btn btn-sm btn-outline-dark">Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Urination Module -->
+    <div class="col-md-3">
+        <div class="card h-100" style="background-color: #E4F7BF;">
+            <div class="card-body text-center">
+                <h5 class="card-title">Urination</h5>
+                <p class="card-text text-muted">Today: No entries yet.</p>
+                <button class="btn btn-sm btn-secondary">Log Urination</button>
+            </div>
+            <div class="card-footer bg-transparent border-0 text-end">
+                <button class="btn btn-sm btn-outline-dark">Remove</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
