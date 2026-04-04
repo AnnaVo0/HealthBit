@@ -76,8 +76,15 @@ class Entry(db.Model):
 class FoodEntry(Entry):
     __tablename__ = "food_entries"
     id = db.Column(db.Integer, db.ForeignKey("entries.id"), primary_key=True)
-    food_name = db.Column(db.String(100))
-    calories = db.Column(db.Integer)
+    food_name = db.Column(db.String(100), nullable=False)
+    calories = db.Column(db.Integer, nullable=False)
+
+    # Flask will error out without a proper __init__() declared here
+    # For child entries that inherit from Entry, only user_id needs to be set in __init__() + any new child class-specific attributes
+    def __init__(self, user_id, food_name, calories):
+        self.user_id = user_id
+        self.food_name = food_name
+        self.calories = calories
 
     __mapper_args__ = {"polymorphic_identity": "food"}
 

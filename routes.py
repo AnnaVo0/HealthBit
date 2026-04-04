@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from flask_login import login_user, logout_user, login_required
-from database import db, User
-from forms import LoginForm, RegisterForm
+from flask_login import login_user, logout_user, login_required, current_user
+from database import db, User, FoodEntry
+from forms import LoginForm, RegisterForm, FoodLogForm
 import bcrypt
 
 main = Blueprint('main', __name__)
@@ -55,3 +55,15 @@ def logout():
 @login_required
 def dashboard():
     return render_template('dashboard.html')
+
+@main.route('/log-food', methods=['GET', 'POST'])
+@login_required
+def log_food():
+    log_form = FoodLogForm()
+    if log_form.validate_on_submit():
+        food_name = request.form['food_name']
+        calories = request.form['calories']
+        log = FoodEntry(current_user.id, food_name, calories)
+        db.session.add(log)
+        db.session.commit()
+    return render_template('log_food.html', form=log_form)
