@@ -1,0 +1,35 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Your Food Logs</h1>
+    <button class="btn btn-secondary" data-bs-toggle="offcanvas" href="#logForm" role="button" aria-controls="logForm">+ Add Log</button>
+</div>
+
+<!-- On (+ Add Log) button press, log creation form appears from the bottom of the page -->
+<div class="offcanvas offcanvas-bottom mx-auto w-50 rounded-top" style="height: 83%" tabindex="-1" id="logForm" aria-labelledby="logFormLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="logFormLabel">New Food Log</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <form method="POST">
+        
+    </form>
+    <!-- <div>
+      Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+    </div>
+    <div class="dropdown mt-3">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+        Dropdown button
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li><a class="dropdown-item" href="#">Action</a></li>
+        <li><a class="dropdown-item" href="#">Another action</a></li>
+        <li><a class="dropdown-item" href="#">Something else here</a></li>
+      </ul>
+    </div> -->
+  </div>
+</div>
+
+{% endblock %}

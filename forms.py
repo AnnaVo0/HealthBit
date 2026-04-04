@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms.validators import DataRequired, Length, ValidationError
-from wtforms.fields import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.validators import DataRequired, Length, ValidationError, NumberRange
+from wtforms.fields import StringField, PasswordField, BooleanField, SubmitField, IntegerField
 from database import db, User
-from config import usernameMinLen, usernameMaxLen, pwdMaxLen, pwdMinLen
+from config import *
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(usernameMinLen, usernameMaxLen)])
@@ -24,3 +24,7 @@ class RegisterForm(FlaskForm):
     def validate_confirm_password(self, confirm_password):
         if self.password.data != confirm_password.data:
             raise ValidationError('Passwords must match.')
+        
+class FoodLogForm(FlaskForm):
+    food_name = StringField('Enter a food item or meal', validators=[DataRequired(), Length(logInputMinLen, logInputMaxLen)])
+    calories = IntegerField('Enter a calorie amount', validators=[DataRequired(), NumberRange(0)])

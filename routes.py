@@ -55,3 +55,8 @@ def logout():
 @login_required
 def dashboard():
     return render_template('dashboard.html')
+
+@main.route('/log-food')
+@login_required
+def log_food():
+    return render_template('log_food.html')
