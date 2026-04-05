@@ -22,12 +22,12 @@ class User(db.Model, UserMixin):
             query = query.filter(FoodEntry.timestamp <= end_date)
         return query.all()
 
-    def get_water_entries(self, start_date=None, end_date=None):
-        query = WaterEntry.query.filter_by(user_id=self.id)
+    def get_hydration_entries(self, start_date=None, end_date=None):
+        query = HydrationEntry.query.filter_by(user_id=self.id)
         if start_date:
-            query = query.filter(WaterEntry.timestamp >= start_date)
+            query = query.filter(HydrationEntry.timestamp >= start_date)
         if end_date:
-            query = query.filter(WaterEntry.timestamp <= end_date)
+            query = query.filter(HydrationEntry.timestamp <= end_date)
         return query.all()
         
     def get_weight_entries(self, start_date=None, end_date=None):
@@ -88,12 +88,20 @@ class FoodEntry(Entry):
 
     __mapper_args__ = {"polymorphic_identity": "food"}
 
-class WaterEntry(Entry):
-    __tablename__ = "water_entries"
+class HydrationEntry(Entry):
+    __tablename__ = "hydration_entries"
     id = db.Column(db.Integer, db.ForeignKey("entries.id"), primary_key=True)
-    amount_ml = db.Column(db.Integer)
+    fluid_type = db.Column(db.String(100), nullable=False)
+    amount_ml = db.Column(db.Integer, nullable=False)
+    caloric_val = db.Column(db.Integer, nullable=False)
 
-    __mapper_args__ = {"polymorphic_identity": "water"}
+    def __init__(self, user_id, fluid_type, amount_ml, caloric_val):
+        self.user_id = user_id
+        self.fluid_type = fluid_type
+        self.amount_ml = amount_ml
+        self.caloric_val = caloric_val
+
+    __mapper_args__ = {"polymorphic_identity": "hydration"}
     
 class WeightEntry(Entry):
     __tablename__ = "weight_entries"
@@ -120,8 +128,23 @@ class BowelMovementEntry(Entry):
 
     __mapper_args__ = {"polymorphic_identity": "bowel_movement"}
 
-class SleepEntry(Entry):
-    pass
 
 class UrineEntry(Entry):
     pass
+
+class SleepEntry(Entry):
+    __tablename__ = "sleep_entries"
+    id = db.Column(db.Integer, db.ForeignKey("entries.id"), primary_key=True)
+    sleep_duration = db.Column(db.Integer, nullable=False)
+    sleep_quality = db.Column(db.String(100), nullable=False)
+    sleep_comment = db.Column(db.String(100), nullable=False)
+
+    def __init__(self, user_id, sleep_duration, sleep_quality, sleep_comment):
+        self.user_id = user_id
+        self.sleep_duration = sleep_duration
+        self.sleep_quality = sleep_quality
+        self.sleep_comment = sleep_comment
+
+    __mapper_args__ = {"polymorphic_identity": "sleep"}
+
+
