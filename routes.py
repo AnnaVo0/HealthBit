@@ -54,7 +54,9 @@ def logout():
 @main.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('dashboard.html')
+    #to get the count of each module entries on dashboard, so need to do this for other modules too
+    food_count = FoodEntry.query.filter_by(user_id=current_user.id).count()
+    return render_template('dashboard.html', food_count=food_count)
 
 @main.route('/log-food', methods=['GET', 'POST'])
 @login_required
@@ -66,4 +68,6 @@ def log_food():
         log = FoodEntry(current_user.id, food_name, calories)
         db.session.add(log)
         db.session.commit()
-    return render_template('log_food.html', form=log_form)
+
+    food_logs = FoodEntry.query.filter_by(user_id=current_user.id).all()
+    return render_template('log_food.html', form=log_form, food_logs=food_logs)
