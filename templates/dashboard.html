@@ -16,7 +16,13 @@
         <div class="card h-100" style="background-color: #FFEB99;">
             <div class="card-body text-center">
                 <h5 class="card-title">Food</h5>
-                <p class="card-text text-muted">Today: No entries yet.</p>
+                <p class="card-text text-muted">Today:
+                    {% if food_count > 0 %}
+                    {{ food_count }} entries logged.
+                    {% else %}
+                    No entries yet.
+                    {% endif %}
+                </p>
                 <a class="btn btn-sm btn-secondary" href="{{url_for('main.log_food')}}" role="button">Log Food</a>
             </div>
             <div class="card-footer bg-transparent border-0 text-end">

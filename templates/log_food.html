@@ -6,6 +6,33 @@
     <button class="btn btn-secondary" data-bs-toggle="offcanvas" href="#logForm" role="button" aria-controls="logForm">+ Add Log</button>
 </div>
 
+    <div>
+    <table class="table">
+        <thread>
+        <tr>
+         <th scope="col"> Food </th>
+         <th scope="col"> Calories</th>
+        </tr>
+        </thread>
+        <tbody>
+        {% for log in food_logs %}
+        <tr>
+            <td> {{ log.food_name }}</td>
+            <td> {{ log.calories }}</td>
+        </tr>
+        {% else %}
+            <tr>
+                <td colspan="2"> No food logs yet. </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+    <!-- Above is table format code from Bootstrap site. Wabt to make a 'delete' button next to each log near end of row -->
+
+
+
 <!-- On (+ Add Log) button press, log creation form appears from the bottom of the page -->
 <div class="offcanvas offcanvas-bottom mx-auto w-25 p-2 rounded-top" style="height: 83%" tabindex="-1" id="logForm" aria-labelledby="logFormLabel">
   <div class="offcanvas-header">
