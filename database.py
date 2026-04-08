@@ -55,10 +55,23 @@ class User(db.Model, UserMixin):
         return query.all()
 
     def get_sleep_entries(self, start_date=None, end_date=None):
-        pass
+        query = SleepEntry.query.filter_by(user_id=self.id)
+        if start_date:
+            query = query.filter(SleepEntry.timestamp >= start_date)
+        if end_date:
+            query = query.filter(SleepEntry.timestamp <= end_date)
+        return query.all()
 
     def get_urine_entries(self, start_date=None, end_date=None):
         pass
+
+    def get_medication_entries(self, start_date=None, end_date=None):
+        query = MedicationEntry.query.filter_by(user_id=self.id)
+        if start_date:
+            query = query.filter(MedicationEntry.timestamp >= start_date)
+        if end_date:
+            query = query.filter(MedicationEntry.timestamp <= end_date)
+        return query.all()
     
 class Entry(db.Model):
     __tablename__ = "entries"
@@ -147,4 +160,19 @@ class SleepEntry(Entry):
 
     __mapper_args__ = {"polymorphic_identity": "sleep"}
 
+class MedicationEntry(Entry):
+    __tablename__ = "medication_entries"
+    id = db.Column(db.Integer, db.ForeignKey("entries.id"), primary_key=True)
+    med_name = db.Column(db.String(100), nullable=False)
+    amount_mg = db.Column(db.Integer, nullable=False)
+    frequency = db.Column(db.String(100), nullable=False)
+    comment = db.Column(db.String(100), nullable=True)
 
+    def __init__(self, user_id, med_name, amount_mg, frequency, comment):
+        self.user_id = user_id
+        self.med_name = med_name
+        self.amount_mg = amount_mg
+        self.frequency = frequency
+        self.comment = comment
+
+    __mapper_args__ = {"polymorphic_identity": "medication"}

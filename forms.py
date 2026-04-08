@@ -42,3 +42,9 @@ class HydrationLogForm(FlaskForm):
     caloric_val =  IntegerField('Enter caloric value', validators=[DataRequired(), NumberRange(0)])
     submit = SubmitField('Log Hydration')
 
+class MedicationLogForm(FlaskForm):
+    med_name = StringField('Enter a medication', validators=[DataRequired(), Length(logInputMinLen, logInputMaxLen)])
+    amount_mg = IntegerField('Enter the amount taken (mg)', validators=[DataRequired(), NumberRange(0)])
+    frequency =  StringField('Enter the frequency medication is taken', validators=[DataRequired(), Length(logInputMinLen, logInputMaxLen)])
+    comment = StringField('Enter a comment (optional)', validators=[Length(0, logInputMaxLen)])
+    submit = SubmitField('Log Medication')
