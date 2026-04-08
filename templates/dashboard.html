@@ -31,13 +31,19 @@
         </div>
     </div>
 
-    <!-- Water Module -->
+    <!-- Hydration Module -->
     <div class="col-md-3">
         <div class="card h-100" style="background-color: #C1ECF8;">
             <div class="card-body text-center">
-                <h5 class="card-title">Water</h5>
-                <p class="card-text text-muted">Today: No entries yet.</p>
-                <button class="btn btn-sm btn-secondary">Log Water</button>
+                <h5 class="card-title">Hydration</h5>
+                <p class="card-text text-muted">Today:
+                 {% if hydration_count > 0 %}
+                    {{ hydration_count }} entries logged.
+                    {% else %}
+                    No entries yet.
+                    {% endif %}
+                </p>
+                <a class="btn btn-sm btn-secondary" href="{{url_for('main.log_hydration')}}" role="button">Log Hydration</a>
             </div>
             <div class="card-footer bg-transparent border-0 text-end">
                 <button class="btn btn-sm btn-outline-dark">Remove</button>
@@ -92,8 +98,14 @@
         <div class="card h-100" style="background-color: #B9B8FF;">
             <div class="card-body text-center">
                 <h5 class="card-title">Sleep</h5>
-                <p class="card-text text-muted">Today: No entries yet.</p>
-                <button class="btn btn-sm btn-secondary">Log Sleep</button>
+                <p class="card-text text-muted">Today:
+                    {% if sleep_count > 0 %}
+                    {{ sleep_count }} entries logged.
+                    {% else %}
+                    No entries yet.
+                    {% endif %}
+                </p>
+                <a class="btn btn-sm btn-secondary" href="{{url_for('main.log_sleep')}}" role="button">Log Sleep</a>
             </div>
             <div class="card-footer bg-transparent border-0 text-end">
                 <button class="btn btn-sm btn-outline-dark">Remove</button>
