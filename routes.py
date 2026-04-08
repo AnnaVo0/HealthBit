@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_user, logout_user, login_required, current_user
-from database import db, User, FoodEntry, SleepEntry, HydrationEntry
-from forms import LoginForm, RegisterForm, FoodLogForm, SleepLogForm, HydrationLogForm
+from database import db, User, FoodEntry, SleepEntry, HydrationEntry, MedicationEntry
+from forms import LoginForm, RegisterForm, FoodLogForm, SleepLogForm, HydrationLogForm, MedicationLogForm
 import bcrypt
 
 main = Blueprint('main', __name__)
@@ -58,7 +58,8 @@ def dashboard():
     food_count = FoodEntry.query.filter_by(user_id=current_user.id).count()
     sleep_count = SleepEntry.query.filter_by(user_id=current_user.id).count()
     hydration_count = HydrationEntry.query.filter_by(user_id=current_user.id).count()
-    return render_template('dashboard.html', food_count=food_count, sleep_count=sleep_count, hydration_count=hydration_count)
+    medication_count = MedicationEntry.query.filter_by(user_id=current_user.id).count()
+    return render_template('dashboard.html', food_count=food_count, sleep_count=sleep_count, hydration_count=hydration_count, medication_count=medication_count)
 
 @main.route('/log-food', methods=['GET', 'POST'])
 @login_required
@@ -72,7 +73,6 @@ def log_food():
         db.session.commit()
 
     food_logs = FoodEntry.query.filter_by(user_id=current_user.id).all()
-
     return render_template('log_food.html', form=log_form, food_logs=food_logs)
 
 @main.route('/log-sleep', methods=['GET', 'POST'])
@@ -104,5 +104,19 @@ def log_hydration():
     hydration_logs = HydrationEntry.query.filter_by(user_id=current_user.id).all()
     return render_template('log_hydration.html', form=log_form, hydration_logs=hydration_logs)
 
+@main.route('/log-medication', methods=['GET', 'POST'])
+def log_medication():
+    log_form = MedicationLogForm()
+    if log_form.validate_on_submit():
+        med_name = request.form['med_name']
+        amount_mg = request.form['amount_mg']
+        frequency = request.form['frequency']
+        comment = request.form['comment']
+        log = MedicationEntry(current_user.id, med_name, amount_mg, frequency, comment)
+        db.session.add(log)
+        db.session.commit()
+
+    medication_logs = MedicationEntry.query.filter_by(user_id=current_user.id).all()
+    return render_template('log_meds.html', form=log_form, medication_logs=medication_logs)
 
 

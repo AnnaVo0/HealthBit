@@ -127,5 +127,25 @@
         </div>
     </div>
 
+    <!-- Medications Module -->
+    <div class="col-md-3">
+        <div class="card h-100" style="background-color: #ffd6d6;">
+            <div class="card-body text-center">
+                <h5 class="card-title">Medications</h5>
+                <p class="card-text text-muted">Today:
+                 {% if medication_count > 0 %}
+                    {{ medication_count }} entries logged.
+                    {% else %}
+                    No entries yet.
+                    {% endif %}
+                </p>
+                <a class="btn btn-sm btn-secondary" href="{{url_for('main.log_medication')}}" role="button">Log Medication</a>
+            </div>
+            <div class="card-footer bg-transparent border-0 text-end">
+                <button class="btn btn-sm btn-outline-dark">Remove</button>
+            </div>
+        </div>
+    </div>
+
 </div>
 {% endblock %}
