@@ -68,7 +68,7 @@ def log_food():
     if log_form.validate_on_submit():
         food_name = request.form['food_name']
         calories = request.form['calories']
-        log = FoodEntry(current_user.id, food_name, calories)
+        log = FoodEntry(user_id=current_user.id, food_name=food_name, calories=calories)
         db.session.add(log)
         db.session.commit()
 
@@ -82,7 +82,7 @@ def log_sleep():
         sleep_duration = request.form['sleep_duration']
         sleep_quality = request.form['sleep_quality']
         sleep_comment = request.form['sleep_comment']
-        log = SleepEntry(current_user.id, sleep_duration, sleep_quality, sleep_comment)
+        log = SleepEntry(user_id=current_user.id, sleep_duration=sleep_duration, sleep_quality=sleep_quality, sleep_comment=sleep_comment)
         db.session.add(log)
         db.session.commit()
 
@@ -97,7 +97,7 @@ def log_hydration():
         fluid_type = request.form['fluid_type']
         amount_ml = request.form['amount_ml']
         caloric_val = request.form['caloric_val']
-        log = HydrationEntry(current_user.id, fluid_type, amount_ml, caloric_val)
+        log = HydrationEntry(user_id=current_user.id, fluid_type=fluid_type, amount_ml=amount_ml, caloric_val=caloric_val)
         db.session.add(log)
         db.session.commit()
 
@@ -112,11 +112,9 @@ def log_medication():
         amount_mg = request.form['amount_mg']
         frequency = request.form['frequency']
         comment = request.form['comment']
-        log = MedicationEntry(current_user.id, med_name, amount_mg, frequency, comment)
+        log = MedicationEntry(user_id=current_user.id, med_name=med_name, amount_mg=amount_mg, frequency=frequency, comment=comment)
         db.session.add(log)
         db.session.commit()
 
     medication_logs = MedicationEntry.query.filter_by(user_id=current_user.id).all()
     return render_template('log_meds.html', form=log_form, medication_logs=medication_logs)
-
-

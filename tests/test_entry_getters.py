@@ -1,6 +1,6 @@
 from app import app, db
 import pytest
-from database import User, FoodEntry, WaterEntry, BowelMovementEntry, ExerciseEntry, WeightEntry
+from database import User, FoodEntry, HydrationEntry, BowelMovementEntry, ExerciseEntry, WeightEntry
 from datetime import datetime, timedelta
 
 @pytest.fixture
@@ -45,22 +45,22 @@ def test_user_get_water_entries(client):
     user = client.query(User).filter_by(username="testuser").first()
     now = datetime.now()
     
-    client.add(WaterEntry(user_id=user.id, amount_ml=100, timestamp=now - timedelta(days=5)))
-    client.add(WaterEntry(user_id=user.id, amount_ml=200, timestamp=now))
-    client.add(WaterEntry(user_id=user.id, amount_ml=300, timestamp=now + timedelta(days=5)))
+    client.add(HydrationEntry(user_id=user.id, fluid_type="Water", amount_ml=100, caloric_val=0, timestamp=now - timedelta(days=5)))
+    client.add(HydrationEntry(user_id=user.id, fluid_type="Water", amount_ml=200, caloric_val=0, timestamp=now))
+    client.add(HydrationEntry(user_id=user.id, fluid_type="Water", amount_ml=300, caloric_val=0, timestamp=now + timedelta(days=5)))
     client.commit()
     
-    start_only = user.get_water_entries(start_date=now - timedelta(days=1))
+    start_only = user.get_hydration_entries(start_date=now - timedelta(days=1))
     assert len(start_only) == 2
     assert start_only[0].amount_ml == 200
     assert start_only[1].amount_ml == 300
     
-    end_only = user.get_water_entries(end_date=now + timedelta(days=1))
+    end_only = user.get_hydration_entries(end_date=now + timedelta(days=1))
     assert len(end_only) == 2
     assert end_only[0].amount_ml == 100
     assert end_only[1].amount_ml == 200
     
-    both = user.get_water_entries(start_date=now - timedelta(days=1), end_date=now + timedelta(days=1))
+    both = user.get_hydration_entries(start_date=now - timedelta(days=1), end_date=now + timedelta(days=1))
     assert len(both) == 1
     assert both[0].amount_ml == 200
 
