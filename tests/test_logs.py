@@ -1,7 +1,7 @@
 from app import app
 from database import db
 import pytest
-from database import User, FoodEntry, WaterEntry, BowelMovementEntry, ExerciseEntry, WeightEntry
+from database import User, FoodEntry, HydrationEntry, BowelMovementEntry, ExerciseEntry, WeightEntry
 
 @pytest.fixture
 def client():
@@ -45,11 +45,11 @@ def test_food_entry(client, name, cals):
 def test_fluid_entry(client, ml):
     user = client.query(User).filter_by(username="testuser").first()
     
-    entry = WaterEntry(user_id=user.id, amount_ml=ml)
+    entry = HydrationEntry(user_id=user.id, amount_ml=ml)
     client.add(entry)
     client.commit()
     
-    result = client.query(WaterEntry).filter_by(amount_ml=ml).first()
+    result = client.query(HydrationEntry).filter_by(amount_ml=ml).first()
     assert result is not None
     assert result.amount_ml == ml
     
