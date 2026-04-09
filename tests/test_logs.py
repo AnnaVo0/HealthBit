@@ -45,7 +45,7 @@ def test_food_entry(client, name, cals):
 def test_fluid_entry(client, ml):
     user = client.query(User).filter_by(username="testuser").first()
     
-    entry = HydrationEntry(user_id=user.id, amount_ml=ml)
+    entry = HydrationEntry(user_id=user.id, fluid_type="Water", amount_ml=ml, caloric_val=0)
     client.add(entry)
     client.commit()
     
