@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Your Sleep Logs</h1>
+    <h1>Your Bowel Movement Logs</h1>
     <button class="btn btn-secondary" data-bs-toggle="offcanvas" href="#logForm" role="button" aria-controls="logForm">+ Add Log</button>
 </div>
 
@@ -10,22 +10,22 @@
     <table class="table">
         <thread>
         <tr>
-         <th scope="col"> Duration (hours) </th>
-             <th scope="col"> Quality</th>
+         <th scope="col"> Type </th>
+             <th scope="col"> Color </th>
             <th scope="col"> Comment </th>
         </tr>
         </thread>
         <tbody>
-        {% for log in sleep_logs %}
+        {% for log in bowel_logs %}
         <tr>
-            <td> {{ log.sleep_duration }}</td>
-            <td> {{ log.sleep_quality }}</td>
-            <td> {{ log.sleep_comment }}</td>
+            <td> {{ log.stool_type }}</td>
+            <td> {{ log.stool_color}}</td>
+            <td> {{ log.stool_description }}</td>
         </tr>
         {% else %}
             <tr>
                 <!--  colspan according to the number of header columns present -->
-                <td colspan="3"> No sleeps logs made yet. </td>
+                <td colspan="3"> No bowel movement logs made yet. </td>
             </tr>
         {% endfor %}
         </tbody>
@@ -39,16 +39,16 @@
 <!-- On (+ Add Log) button press, log creation form appears from the bottom of the page -->
 <div class="offcanvas offcanvas-bottom mx-auto w-25 p-2 rounded-top" style="height: 83%" tabindex="-1" id="logForm" aria-labelledby="logFormLabel">
   <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="logFormLabel">New Sleep Log</h5>
+    <h5 class="offcanvas-title" id="logFormLabel">New Bowel Movement Log</h5>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
     <form method="POST">
         <!-- {{ render_form(form) }} can also replace the render_field() lines below, but I wanted to customize the submit button with Bootstrap classes -->
         {{ form.csrf_token() }}
-        {{ render_field(form.sleep_duration) }}
-        {{ render_field(form.sleep_quality) }}
-         {{ render_field(form.sleep_comment) }}
+        {{ render_field(form.stool_type) }}
+        {{ render_field(form.stool_color) }}
+        {{ render_field(form.stool_description) }}
         {{ render_field(form.submit, class='btn btn-secondary') }}
     </form>
   </div>

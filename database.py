@@ -63,7 +63,12 @@ class User(db.Model, UserMixin):
         return query.all()
 
     def get_urine_entries(self, start_date=None, end_date=None):
-        pass
+        query = UrineEntry.query.filter_by(user_id=self.id)
+        if start_date:
+            query = query.filter(UrineEntry.timestamp >= start_date)
+        if end_date:
+            query = query.filter(UrineEntry.timestamp <= end_date)
+        return query.all()
 
     def get_medication_entries(self, start_date=None, end_date=None):
         query = MedicationEntry.query.filter_by(user_id=self.id)
@@ -130,7 +135,12 @@ class BowelMovementEntry(Entry):
 
 
 class UrineEntry(Entry):
-    pass
+    __tablename__ = "urine_entries"
+    id = db.Column(db.Integer, db.ForeignKey("entries.id"), primary_key=True)
+    urine_color = db.Column(db.String(100), nullable= False)
+    urine_comment = db.Column(db.String(100), nullable = False)
+
+    __mapper_args__ = {"polymorphic_identity": "urine"}
 
 class SleepEntry(Entry):
     __tablename__ = "sleep_entries"

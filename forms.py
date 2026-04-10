@@ -38,7 +38,7 @@ class SleepLogForm(FlaskForm):
 
 class HydrationLogForm(FlaskForm):
     fluid_type = StringField('Enter a fluid type', validators=[DataRequired(), Length(logInputMinLen, logInputMaxLen)])
-    amount_ml = IntegerField('Enter the amount drank', validators=[DataRequired(), NumberRange(0)])
+    amount_ml = IntegerField('Enter the amount drank (mL) ', validators=[DataRequired(), NumberRange(0)])
     caloric_val =  IntegerField('Enter caloric value', validators=[DataRequired(), NumberRange(0)])
     submit = SubmitField('Log Hydration')
 
@@ -48,3 +48,24 @@ class MedicationLogForm(FlaskForm):
     frequency =  StringField('Enter the frequency medication is taken', validators=[DataRequired(), Length(logInputMinLen, logInputMaxLen)])
     comment = StringField('Enter a comment (optional)', validators=[Length(0, logInputMaxLen)])
     submit = SubmitField('Log Medication')
+
+class ExerciseLogForm(FlaskForm):
+    exercise_name = StringField('Enter name of exercise:', validators=[DataRequired(), Length(logInputMinLen, logInputMaxLen)])
+    minutes = IntegerField('Enter the duration of exercise (min) ', validators=[DataRequired(), NumberRange(0)])
+    calories_burned = IntegerField('Enter amount of calories burned', validators=[DataRequired(), NumberRange(0)])
+    submit = SubmitField('Log Exercise')
+
+class BowelLogForm(FlaskForm):
+    stool_type = StringField('Enter type of bowel movement: ', validators=[DataRequired(), Length(logInputMinLen, logInputMaxLen)])
+    stool_color = StringField('Enter color of stool: ', validators=[DataRequired(), Length(logInputMinLen, logInputMaxLen)])
+    stool_description = StringField('Enter comment about stool (optional) : ', validators=[Length(0, logInputMaxLen)])
+    submit = SubmitField('Log Bowel Movement')
+
+class WeightLogForm(FlaskForm):
+    weight_lbs = IntegerField('Enter weight (lbs)', validators=[DataRequired(), NumberRange(0)])
+    submit = SubmitField('Log Weight')
+
+class UrineLogForm(FlaskForm):
+    urine_color = StringField('Enter color of urine: ', validators=[DataRequired(), Length(logInputMinLen, logInputMaxLen)])
+    urine_comment = StringField('Enter a comment (frequency, sensation)', validators=[Length(0, logInputMaxLen)])
+    submit = SubmitField('Log Urine')

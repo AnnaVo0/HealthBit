@@ -56,8 +56,15 @@
         <div class="card h-100" style="background-color: #F4D6FF;">
             <div class="card-body text-center">
                 <h5 class="card-title">Weight</h5>
-                <p class="card-text text-muted">Today: No entries yet.</p>
-                <button class="btn btn-sm btn-secondary">Log Weight</button>
+                <p class="card-text text-muted">Today:
+                    {% if weight_count > 0 %}
+                    {{ weight_count }} entries logged.
+                    {% else %}
+                    No entries yet.
+                    {% endif %}
+
+                </p>
+                 <a class="btn btn-sm btn-secondary" href="{{url_for('main.log_weight')}}" role="button">Log Weight</a>
             </div>
             <div class="card-footer bg-transparent border-0 text-end">
                 <button class="btn btn-sm btn-outline-dark">Remove</button>
@@ -70,8 +77,14 @@
         <div class="card h-100" style="background-color: #A9E3BF;">
             <div class="card-body text-center">
                 <h5 class="card-title">Exercise</h5>
-                <p class="card-text text-muted">Today: No entries yet.</p>
-                <button class="btn btn-sm btn-secondary">Log Exercise</button>
+                <p class="card-text text-muted">Today:
+                {% if exercise_count > 0 %}
+                    {{ exercise_count }} entries logged.
+                    {% else %}
+                    No entries yet.
+                    {% endif %}
+                </p>
+                <a class="btn btn-sm btn-secondary" href="{{url_for('main.log_exercise')}}" role="button">Log Exercise</a>
             </div>
             <div class="card-footer bg-transparent border-0 text-end">
                 <button class="btn btn-sm btn-outline-dark">Remove</button>
@@ -84,8 +97,14 @@
         <div class="card h-100" style="background-color: #FFCC99;">
             <div class="card-body text-center">
                 <h5 class="card-title">Bowel Movement</h5>
-                <p class="card-text text-muted">Today: No entries yet.</p>
-                <button class="btn btn-sm btn-secondary">Log Bowel Movement</button>
+                <p class="card-text text-muted">Today:
+                    {% if bowel_count > 0 %}
+                    {{ bowel_count }} entries logged.
+                    {% else %}
+                    No entries yet.
+                    {% endif %}
+                </p>
+                <a class="btn btn-sm btn-secondary" href="{{url_for('main.log_bowel')}}" role="button">Log Bowel Movement</a>
             </div>
             <div class="card-footer bg-transparent border-0 text-end">
                 <button class="btn btn-sm btn-outline-dark">Remove</button>
@@ -118,8 +137,14 @@
         <div class="card h-100" style="background-color: #E4F7BF;">
             <div class="card-body text-center">
                 <h5 class="card-title">Urination</h5>
-                <p class="card-text text-muted">Today: No entries yet.</p>
-                <button class="btn btn-sm btn-secondary">Log Urination</button>
+                <p class="card-text text-muted">Today:
+                {% if urine_count > 0 %}
+                    {{ urine_count }} entries logged.
+                    {% else %}
+                    No entries yet.
+                    {% endif %}
+                </p>
+                <a class="btn btn-sm btn-secondary" href="{{url_for('main.log_urine')}}" role="button">Log Urine</a>
             </div>
             <div class="card-footer bg-transparent border-0 text-end">
                 <button class="btn btn-sm btn-outline-dark">Remove</button>

@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_user, logout_user, login_required, current_user
-from database import db, User, FoodEntry, SleepEntry, HydrationEntry, MedicationEntry
-from forms import LoginForm, RegisterForm, FoodLogForm, SleepLogForm, HydrationLogForm, MedicationLogForm
+from database import db, User, FoodEntry, SleepEntry, HydrationEntry, MedicationEntry, ExerciseEntry, \
+    BowelMovementEntry, WeightEntry, UrineEntry
+from forms import LoginForm, RegisterForm, FoodLogForm, SleepLogForm, HydrationLogForm, MedicationLogForm, \
+    ExerciseLogForm, BowelLogForm, WeightLogForm, UrineLogForm
 import bcrypt
 
 main = Blueprint('main', __name__)
@@ -59,7 +61,11 @@ def dashboard():
     sleep_count = SleepEntry.query.filter_by(user_id=current_user.id).count()
     hydration_count = HydrationEntry.query.filter_by(user_id=current_user.id).count()
     medication_count = MedicationEntry.query.filter_by(user_id=current_user.id).count()
-    return render_template('dashboard.html', food_count=food_count, sleep_count=sleep_count, hydration_count=hydration_count, medication_count=medication_count)
+    exercise_count = ExerciseEntry.query.filter_by(user_id=current_user.id).count()
+    bowel_count = BowelMovementEntry.query.filter_by(user_id=current_user.id).count()
+    weight_count = WeightEntry.query.filter_by(user_id=current_user.id).count()
+    urine_count = UrineEntry.query.filter_by(user_id=current_user.id).count()
+    return render_template('dashboard.html', food_count=food_count, sleep_count=sleep_count, hydration_count=hydration_count, medication_count=medication_count, exercise_count=exercise_count, bowel_count=bowel_count, weight_count=weight_count, urine_count=urine_count)
 
 @main.route('/log-food', methods=['GET', 'POST'])
 @login_required
@@ -118,3 +124,58 @@ def log_medication():
 
     medication_logs = MedicationEntry.query.filter_by(user_id=current_user.id).all()
     return render_template('log_meds.html', form=log_form, medication_logs=medication_logs)
+
+
+@main.route('/log-exercise', methods=['GET', 'POST'])
+def log_exercise():
+    log_form = ExerciseLogForm()
+    if log_form.validate_on_submit():
+        exercise_name = request.form['exercise_name']
+        minutes = request.form['minutes']
+        calories_burned = request.form['calories_burned']
+        log = ExerciseEntry(user_id=current_user.id, exercise_name=exercise_name, minutes=minutes, calories_burned=calories_burned)
+        db.session.add(log)
+        db.session.commit()
+
+    exercise_logs = ExerciseEntry.query.filter_by(user_id=current_user.id).all()
+    return render_template('log_exercise.html', form=log_form, exercise_logs=exercise_logs)
+
+
+@main.route('/log-bowel', methods=['GET', 'POST'])
+def log_bowel():
+    log_form = BowelLogForm()
+    if log_form.validate_on_submit():
+        stool_type = request.form['stool_type']
+        stool_color = request.form['stool_color']
+        stool_description = request.form['stool_description']
+        log = BowelMovementEntry(user_id=current_user.id, stool_type=stool_type, stool_color=stool_color, stool_description=stool_description)
+        db.session.add(log)
+        db.session.commit()
+
+    bowel_logs = BowelMovementEntry.query.filter_by(user_id=current_user.id).all()
+    return render_template('log_bowel.html', form=log_form, bowel_logs=bowel_logs)
+
+@main.route('/log-weight', methods=['GET', 'POST'])
+def log_weight():
+    log_form = WeightLogForm()
+    if log_form.validate_on_submit():
+        weight_lbs = request.form['weight_lbs']
+        log = WeightEntry(user_id=current_user.id, weight_lbs=weight_lbs)
+        db.session.add(log)
+        db.session.commit()
+
+    weight_logs = WeightEntry.query.filter_by(user_id=current_user.id).all()
+    return render_template('log_weight.html', form=log_form, weight_logs=weight_logs)
+
+@main.route('/log-urine', methods=['GET', 'POST'])
+def log_urine():
+    log_form = UrineLogForm()
+    if log_form.validate_on_submit():
+        urine_color = request.form['urine_color']
+        urine_comment = request.form['urine_comment']
+        log = UrineEntry(user_id=current_user.id, urine_color=urine_color, urine_comment=urine_comment)
+        db.session.add(log)
+        db.session.commit()
+
+    urine_logs = UrineEntry.query.filter_by(user_id=current_user.id).all()
+    return render_template('log_urine.html', form=log_form, urine_logs=urine_logs)
