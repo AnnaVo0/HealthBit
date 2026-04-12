@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(pwdMaxLen), nullable=False)
     
     entries = relationship("Entry", backref="user", cascade="all, delete-orphan")
+    hidden_modules = relationship("HiddenModule", backref="user_hidden", cascade="all, delete-orphan")
     
     def get_food_entries(self, start_date=None, end_date=None):
         query = FoodEntry.query.filter_by(user_id=self.id)
@@ -133,7 +134,6 @@ class BowelMovementEntry(Entry):
 
     __mapper_args__ = {"polymorphic_identity": "bowel_movement"}
 
-
 class UrineEntry(Entry):
     __tablename__ = "urine_entries"
     id = db.Column(db.Integer, db.ForeignKey("entries.id"), primary_key=True)
@@ -160,3 +160,10 @@ class MedicationEntry(Entry):
     comment = db.Column(db.String(100), nullable=True)
 
     __mapper_args__ = {"polymorphic_identity": "medication"}
+
+class HiddenModule(db.Model):
+    __tablename__ = "hidden_modules"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    module_name = db.Column(db.String(50), nullable=False)
