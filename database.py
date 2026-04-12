@@ -149,12 +149,6 @@ class SleepEntry(Entry):
     sleep_quality = db.Column(db.String(100), nullable=False)
     sleep_comment = db.Column(db.String(100), nullable=False)
 
-    def __init__(self, user_id, sleep_duration, sleep_quality, sleep_comment):
-        self.user_id = user_id
-        self.sleep_duration = sleep_duration
-        self.sleep_quality = sleep_quality
-        self.sleep_comment = sleep_comment
-
     __mapper_args__ = {"polymorphic_identity": "sleep"}
 
 class MedicationEntry(Entry):
@@ -164,12 +158,5 @@ class MedicationEntry(Entry):
     amount_mg = db.Column(db.Integer, nullable=False)
     frequency = db.Column(db.String(100), nullable=False)
     comment = db.Column(db.String(100), nullable=True)
-
-    def __init__(self, user_id, med_name, amount_mg, frequency, comment):
-        self.user_id = user_id
-        self.med_name = med_name
-        self.amount_mg = amount_mg
-        self.frequency = frequency
-        self.comment = comment
 
     __mapper_args__ = {"polymorphic_identity": "medication"}
