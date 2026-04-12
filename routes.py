@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_user, logout_user, login_required, current_user
 from database import db, User, FoodEntry, SleepEntry, HydrationEntry, MedicationEntry, ExerciseEntry, \
-    BowelMovementEntry, WeightEntry, UrineEntry
+    BowelMovementEntry, WeightEntry, UrineEntry, HiddenModule
 from forms import LoginForm, RegisterForm, FoodLogForm, SleepLogForm, HydrationLogForm, MedicationLogForm, \
     ExerciseLogForm, BowelLogForm, WeightLogForm, UrineLogForm
 import bcrypt
@@ -56,6 +56,8 @@ def logout():
 @main.route('/dashboard')
 @login_required
 def dashboard():
+    hidden = [m.module_name for m in HiddenModule.query.filter_by(user_id=current_user.id).all()]
+
     #to get the count of each module entries on dashboard, so need to do this for other modules too
     food_count = FoodEntry.query.filter_by(user_id=current_user.id).count()
     sleep_count = SleepEntry.query.filter_by(user_id=current_user.id).count()
@@ -65,7 +67,9 @@ def dashboard():
     bowel_count = BowelMovementEntry.query.filter_by(user_id=current_user.id).count()
     weight_count = WeightEntry.query.filter_by(user_id=current_user.id).count()
     urine_count = UrineEntry.query.filter_by(user_id=current_user.id).count()
-    return render_template('dashboard.html', food_count=food_count, sleep_count=sleep_count, hydration_count=hydration_count, medication_count=medication_count, exercise_count=exercise_count, bowel_count=bowel_count, weight_count=weight_count, urine_count=urine_count)
+    return render_template('dashboard.html', food_count=food_count, sleep_count=sleep_count,
+                           hydration_count=hydration_count, medication_count=medication_count, exercise_count=exercise_count,
+                           bowel_count=bowel_count, weight_count=weight_count, urine_count=urine_count, hidden=hidden)
 
 @main.route('/log-food', methods=['GET', 'POST'])
 @login_required
@@ -186,3 +190,77 @@ def log_urine():
 
     urine_logs = UrineEntry.query.filter_by(user_id=current_user.id).all()
     return render_template('log_urine.html', form=log_form, urine_logs=urine_logs)
+
+@main.route('/hide-module/<module_name>', methods=['POST'])
+@login_required
+def hide_module(module_name):
+    already_hidden = HiddenModule.query.filter_by(user_id=current_user.id, module_name=module_name).first()
+    if not already_hidden:
+        hidden = HiddenModule(user_id=current_user.id, module_name=module_name)
+        db.session.add(hidden)
+        db.session.commit()
+    return redirect(url_for('main.dashboard'))
+
+
+@main.route('/hide-and-delete-module/<module_name>', methods=['POST'])
+@login_required
+def hide_and_delete_module(module_name):
+    already_hidden = HiddenModule.query.filter_by(user_id=current_user.id, module_name=module_name).first()
+    if not already_hidden:
+        hidden = HiddenModule(user_id=current_user.id, module_name=module_name)
+        db.session.add(hidden)
+        db.session.commit()
+
+    # Delete all entries for this module
+    if module_name == "food":
+        entries = FoodEntry.query.filter_by(user_id=current_user.id).all()
+        for entry in entries:
+            db.session.delete(entry)
+        db.session.commit()
+    elif module_name == "hydration":
+        entries = HydrationEntry.query.filter_by(user_id=current_user.id).all()
+        for entry in entries:
+            db.session.delete(entry)
+        db.session.commit()
+    elif module_name == "weight":
+        entries = WeightEntry.query.filter_by(user_id=current_user.id).all()
+        for entry in entries:
+            db.session.delete(entry)
+        db.session.commit()
+    elif module_name == "exercise":
+        entries = ExerciseEntry.query.filter_by(user_id=current_user.id).all()
+        for entry in entries:
+            db.session.delete(entry)
+        db.session.commit()
+    elif module_name == "bowel":
+        entries = BowelMovementEntry.query.filter_by(user_id=current_user.id).all()
+        for entry in entries:
+            db.session.delete(entry)
+        db.session.commit()
+    elif module_name == "sleep":
+        entries = SleepEntry.query.filter_by(user_id=current_user.id).all()
+        for entry in entries:
+            db.session.delete(entry)
+        db.session.commit()
+    elif module_name == "urine":
+        entries = UrineEntry.query.filter_by(user_id=current_user.id).all()
+        for entry in entries:
+            db.session.delete(entry)
+        db.session.commit()
+    elif module_name == "medication":
+        entries = MedicationEntry.query.filter_by(user_id=current_user.id).all()
+        for entry in entries:
+            db.session.delete(entry)
+        db.session.commit()
+
+    return redirect(url_for('main.dashboard'))
+
+
+@main.route('/add-module/<module_name>', methods=['POST'])
+@login_required
+def add_module(module_name):
+    hidden = HiddenModule.query.filter_by(user_id=current_user.id, module_name=module_name).first()
+    if hidden:
+        db.session.delete(hidden)
+        db.session.commit()
+    return redirect(url_for('main.dashboard'))
