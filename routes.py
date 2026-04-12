@@ -82,6 +82,7 @@ def log_food():
     return render_template('log_food.html', form=log_form, food_logs=food_logs)
 
 @main.route('/log-sleep', methods=['GET', 'POST'])
+@login_required
 def log_sleep():
     log_form = SleepLogForm()
     if log_form.validate_on_submit():
@@ -97,6 +98,7 @@ def log_sleep():
 
 
 @main.route('/log-hydration', methods=['GET', 'POST'])
+@login_required
 def log_hydration():
     log_form = HydrationLogForm()
     if log_form.validate_on_submit():
@@ -111,6 +113,7 @@ def log_hydration():
     return render_template('log_hydration.html', form=log_form, hydration_logs=hydration_logs)
 
 @main.route('/log-medication', methods=['GET', 'POST'])
+@login_required
 def log_medication():
     log_form = MedicationLogForm()
     if log_form.validate_on_submit():
@@ -127,6 +130,7 @@ def log_medication():
 
 
 @main.route('/log-exercise', methods=['GET', 'POST'])
+@login_required
 def log_exercise():
     log_form = ExerciseLogForm()
     if log_form.validate_on_submit():
@@ -142,6 +146,7 @@ def log_exercise():
 
 
 @main.route('/log-bowel', methods=['GET', 'POST'])
+@login_required
 def log_bowel():
     log_form = BowelLogForm()
     if log_form.validate_on_submit():
@@ -156,6 +161,7 @@ def log_bowel():
     return render_template('log_bowel.html', form=log_form, bowel_logs=bowel_logs)
 
 @main.route('/log-weight', methods=['GET', 'POST'])
+@login_required
 def log_weight():
     log_form = WeightLogForm()
     if log_form.validate_on_submit():
@@ -168,6 +174,7 @@ def log_weight():
     return render_template('log_weight.html', form=log_form, weight_logs=weight_logs)
 
 @main.route('/log-urine', methods=['GET', 'POST'])
+@login_required
 def log_urine():
     log_form = UrineLogForm()
     if log_form.validate_on_submit():
