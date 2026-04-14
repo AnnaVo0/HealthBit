@@ -82,7 +82,7 @@ def log_food():
         db.session.add(log)
         db.session.commit()
 
-    food_logs = FoodEntry.query.filter_by(user_id=current_user.id).all()
+    food_logs = current_user.get_food_entries()
     return render_template('log_food.html', form=log_form, food_logs=food_logs)
 
 @main.route('/log-sleep', methods=['GET', 'POST'])
@@ -97,7 +97,7 @@ def log_sleep():
         db.session.add(log)
         db.session.commit()
 
-    sleep_logs = SleepEntry.query.filter_by(user_id=current_user.id).all()
+    sleep_logs = current_user.get_sleep_entries()
     return render_template('log_sleep.html', form=log_form, sleep_logs=sleep_logs)
 
 
@@ -113,7 +113,7 @@ def log_hydration():
         db.session.add(log)
         db.session.commit()
 
-    hydration_logs = HydrationEntry.query.filter_by(user_id=current_user.id).all()
+    hydration_logs = current_user.get_hydration_entries()
     return render_template('log_hydration.html', form=log_form, hydration_logs=hydration_logs)
 
 @main.route('/log-medication', methods=['GET', 'POST'])
@@ -129,7 +129,7 @@ def log_medication():
         db.session.add(log)
         db.session.commit()
 
-    medication_logs = MedicationEntry.query.filter_by(user_id=current_user.id).all()
+    medication_logs = current_user.get_medication_entries()
     return render_template('log_meds.html', form=log_form, medication_logs=medication_logs)
 
 
@@ -145,7 +145,7 @@ def log_exercise():
         db.session.add(log)
         db.session.commit()
 
-    exercise_logs = ExerciseEntry.query.filter_by(user_id=current_user.id).all()
+    exercise_logs = current_user.get_exercise_entries()
     return render_template('log_exercise.html', form=log_form, exercise_logs=exercise_logs)
 
 
@@ -161,7 +161,7 @@ def log_bowel():
         db.session.add(log)
         db.session.commit()
 
-    bowel_logs = BowelMovementEntry.query.filter_by(user_id=current_user.id).all()
+    bowel_logs = current_user.get_bowel_movement_entries()
     return render_template('log_bowel.html', form=log_form, bowel_logs=bowel_logs)
 
 @main.route('/log-weight', methods=['GET', 'POST'])
@@ -174,7 +174,7 @@ def log_weight():
         db.session.add(log)
         db.session.commit()
 
-    weight_logs = WeightEntry.query.filter_by(user_id=current_user.id).all()
+    weight_logs = current_user.get_weight_entries()
     return render_template('log_weight.html', form=log_form, weight_logs=weight_logs)
 
 @main.route('/log-urine', methods=['GET', 'POST'])
@@ -188,7 +188,7 @@ def log_urine():
         db.session.add(log)
         db.session.commit()
 
-    urine_logs = UrineEntry.query.filter_by(user_id=current_user.id).all()
+    urine_logs = current_user.get_urine_entries()
     return render_template('log_urine.html', form=log_form, urine_logs=urine_logs)
 
 @main.route('/hide-module/<module_name>', methods=['POST'])
@@ -200,7 +200,6 @@ def hide_module(module_name):
         db.session.add(hidden)
         db.session.commit()
     return redirect(url_for('main.dashboard'))
-
 
 @main.route('/hide-and-delete-module/<module_name>', methods=['POST'])
 @login_required
