@@ -76,132 +76,162 @@ def dashboard():
 @login_required
 def log_food():
     log_form = FoodLogForm()
+    date_str = request.args.get('date') or date.today().isoformat()
+    
+    try:
+        selected_date = date.fromisoformat(date_str)
+    except ValueError:
+        selected_date = datetime.fromisoformat(date_str).date()
+    
+    if request.method == 'GET':
+        log_form.timestamp.data = datetime.combine(selected_date, datetime.now().time())
+    
     if log_form.validate_on_submit():
-        food_name = request.form['food_name']
-        calories = request.form['calories']
-        log = FoodEntry(user_id=current_user.id, food_name=food_name, calories=calories)
+        timestamp = log_form.timestamp.data.replace(tzinfo=timezone.utc)
+        food_name = log_form.food_name.data
+        calories = log_form.calories.data
+        
+        log = FoodEntry(user_id=current_user.id, food_name=food_name, calories=calories, timestamp=timestamp)
         db.session.add(log)
         db.session.commit()
-        return redirect(url_for('main.log_food', date=request.args.get('date') or date.today().isoformat()))
         
-    date_str = request.args.get('date') or date.today().isoformat()
-    selected_date = date.fromisoformat(date_str)
+        return redirect(url_for('main.log_food', date=log_form.timestamp.data.date().isoformat()))
     
-    start = datetime.combine(selected_date, time.min)
-    end = datetime.combine(selected_date, time.max)
+    start = datetime.combine(selected_date, time.min, tzinfo=timezone.utc)
+    end = datetime.combine(selected_date, time.max, tzinfo=timezone.utc)
 
     food_logs = current_user.get_food_entries(start_date=start, end_date=end)
-    return render_template('log_food.html', form=log_form, food_logs=food_logs, selected_date=date_str)
-
+    return render_template('log_food.html', form=log_form, food_logs=food_logs, selected_date=selected_date.isoformat())
 @main.route('/log-sleep', methods=['GET', 'POST'])
 @login_required
 def log_sleep():
     log_form = SleepLogForm()
     if log_form.validate_on_submit():
-        sleep_duration = request.form['sleep_duration']
-        sleep_quality = request.form['sleep_quality']
-        sleep_comment = request.form['sleep_comment']
+        sleep_duration = log_form.sleep_duration.data
+        sleep_quality = log_form.sleep_quality.data
+        sleep_comment = log_form.sleep_comment.data
         log = SleepEntry(user_id=current_user.id, sleep_duration=sleep_duration, sleep_quality=sleep_quality, sleep_comment=sleep_comment)
         db.session.add(log)
         db.session.commit()
+        return redirect(url_for('main.log_sleep'))
 
     sleep_logs = current_user.get_sleep_entries()
     return render_template('log_sleep.html', form=log_form, sleep_logs=sleep_logs)
-
 
 @main.route('/log-hydration', methods=['GET', 'POST'])
 @login_required
 def log_hydration():
     log_form = HydrationLogForm()
+    date_str = request.args.get('date') or date.today().isoformat()
+    try:
+        selected_date = date.fromisoformat(date_str)
+    except ValueError:
+        selected_date = datetime.fromisoformat(date_str).date()
+    
+    if request.method == 'GET':
+        log_form.timestamp.data = datetime.combine(selected_date, datetime.now().time())
+    
     if log_form.validate_on_submit():
-        fluid_type = request.form['fluid_type']
-        amount_ml = request.form['amount_ml']
-        caloric_val = request.form['caloric_val']
-        log = HydrationEntry(user_id=current_user.id, fluid_type=fluid_type, amount_ml=amount_ml, caloric_val=caloric_val)
+        timestamp = log_form.timestamp.data.replace(tzinfo=timezone.utc)
+        fluid_type = log_form.fluid_type.data
+        amount_ml = log_form.amount_ml.data
+        caloric_val = log_form.caloric_val.data
+        log = HydrationEntry(user_id=current_user.id, fluid_type=fluid_type, amount_ml=amount_ml, caloric_val=caloric_val, timestamp=timestamp)
         db.session.add(log)
         db.session.commit()
-        return redirect(url_for('main.log_hydration', date=request.args.get('date') or date.today().isoformat()))
-        
-    date_str = request.args.get('date') or date.today().isoformat()
-    selected_date = date.fromisoformat(date_str)
+        return redirect(url_for('main.log_hydration', date=log_form.timestamp.data.date().isoformat()))
     
-    start = datetime.combine(selected_date, time.min)
-    end = datetime.combine(selected_date, time.max)
+    start = datetime.combine(selected_date, time.min, tzinfo=timezone.utc)
+    end = datetime.combine(selected_date, time.max, tzinfo=timezone.utc)
 
     hydration_logs = current_user.get_hydration_entries(start_date=start, end_date=end)
-    return render_template('log_hydration.html', form=log_form, hydration_logs=hydration_logs, selected_date=date_str)
+    return render_template('log_hydration.html', form=log_form, hydration_logs=hydration_logs, selected_date=selected_date.isoformat())
 
 @main.route('/log-medication', methods=['GET', 'POST'])
 @login_required
 def log_medication():
     log_form = MedicationLogForm()
     if log_form.validate_on_submit():
-        med_name = request.form['med_name']
-        amount_mg = request.form['amount_mg']
-        frequency = request.form['frequency']
-        comment = request.form['comment']
+        med_name = log_form.med_name.data
+        amount_mg = log_form.amount_mg.data
+        frequency = log_form.frequency.data
+        comment = log_form.comment.data
         log = MedicationEntry(user_id=current_user.id, med_name=med_name, amount_mg=amount_mg, frequency=frequency, comment=comment)
         db.session.add(log)
         db.session.commit()
+        return redirect(url_for('main.log_medication'))
 
     medication_logs = current_user.get_medication_entries()
     return render_template('log_meds.html', form=log_form, medication_logs=medication_logs)
-
 
 @main.route('/log-exercise', methods=['GET', 'POST'])
 @login_required
 def log_exercise():
     log_form = ExerciseLogForm()
+    date_str = request.args.get('date') or date.today().isoformat()
+    try:
+        selected_date = date.fromisoformat(date_str)
+    except ValueError:
+        selected_date = datetime.fromisoformat(date_str).date()
+    
+    if request.method == 'GET':
+        log_form.timestamp.data = datetime.combine(selected_date, datetime.now().time())
+    
     if log_form.validate_on_submit():
-        exercise_name = request.form['exercise_name']
-        minutes = request.form['minutes']
-        calories_burned = request.form['calories_burned']
-        log = ExerciseEntry(user_id=current_user.id, exercise_name=exercise_name, minutes=minutes, calories_burned=calories_burned)
+        timestamp = log_form.timestamp.data.replace(tzinfo=timezone.utc)
+        exercise_name = log_form.exercise_name.data
+        minutes = log_form.minutes.data
+        calories_burned = log_form.calories_burned.data
+        log = ExerciseEntry(user_id=current_user.id, exercise_name=exercise_name, minutes=minutes, calories_burned=calories_burned, timestamp=timestamp)
         db.session.add(log)
         db.session.commit()
-        return redirect(url_for('main.log_exercise', date=request.args.get('date') or date.today().isoformat()))
-        
-    date_str = request.args.get('date') or date.today().isoformat()
-    selected_date = date.fromisoformat(date_str)
+        return redirect(url_for('main.log_exercise', date=log_form.timestamp.data.date().isoformat()))
     
-    start = datetime.combine(selected_date, time.min)
-    end = datetime.combine(selected_date, time.max)
+    start = datetime.combine(selected_date, time.min, tzinfo=timezone.utc)
+    end = datetime.combine(selected_date, time.max, tzinfo=timezone.utc)
 
     exercise_logs = current_user.get_exercise_entries(start_date=start, end_date=end)
-    return render_template('log_exercise.html', form=log_form, exercise_logs=exercise_logs, selected_date=date_str)
-
+    return render_template('log_exercise.html', form=log_form, exercise_logs=exercise_logs, selected_date=selected_date.isoformat())
 
 @main.route('/log-bowel', methods=['GET', 'POST'])
 @login_required
 def log_bowel():
     log_form = BowelLogForm()
+    date_str = request.args.get('date') or date.today().isoformat()
+    try:
+        selected_date = date.fromisoformat(date_str)
+    except ValueError:
+        selected_date = datetime.fromisoformat(date_str).date()
+    
+    if request.method == 'GET':
+        log_form.timestamp.data = datetime.combine(selected_date, datetime.now().time())
+    
     if log_form.validate_on_submit():
-        stool_type = request.form['stool_type']
-        stool_color = request.form['stool_color']
-        stool_description = request.form['stool_description']
-        log = BowelMovementEntry(user_id=current_user.id, stool_type=stool_type, stool_color=stool_color, stool_description=stool_description)
+        timestamp = log_form.timestamp.data.replace(tzinfo=timezone.utc)
+        stool_type = log_form.stool_type.data
+        stool_color = log_form.stool_color.data
+        stool_description = log_form.stool_description.data
+        log = BowelMovementEntry(user_id=current_user.id, stool_type=stool_type, stool_color=stool_color, stool_description=stool_description, timestamp=timestamp)
         db.session.add(log)
         db.session.commit()
-        return redirect(url_for('main.log_bowel', date=request.args.get('date') or date.today().isoformat()))
+        return redirect(url_for('main.log_bowel', date=log_form.timestamp.data.date().isoformat()))
     
-    date_str = request.args.get('date') or date.today().isoformat()
-    selected_date = date.fromisoformat(date_str)
-    
-    start = datetime.combine(selected_date, time.min)
-    end = datetime.combine(selected_date, time.max)
+    start = datetime.combine(selected_date, time.min, tzinfo=timezone.utc)
+    end = datetime.combine(selected_date, time.max, tzinfo=timezone.utc)
 
     bowel_logs = current_user.get_bowel_movement_entries(start_date=start, end_date=end)
-    return render_template('log_bowel.html', form=log_form, bowel_logs=bowel_logs, selected_date=date_str)
+    return render_template('log_bowel.html', form=log_form, bowel_logs=bowel_logs, selected_date=selected_date.isoformat())
 
 @main.route('/log-weight', methods=['GET', 'POST'])
 @login_required
 def log_weight():
     log_form = WeightLogForm()
     if log_form.validate_on_submit():
-        weight_lbs = request.form['weight_lbs']
+        weight_lbs = log_form.weight_lbs.data
         log = WeightEntry(user_id=current_user.id, weight_lbs=weight_lbs)
         db.session.add(log)
         db.session.commit()
+        return redirect(url_for('main.log_weight'))
 
     weight_logs = current_user.get_weight_entries()
     return render_template('log_weight.html', form=log_form, weight_logs=weight_logs)
@@ -210,22 +240,29 @@ def log_weight():
 @login_required
 def log_urine():
     log_form = UrineLogForm()
+    date_str = request.args.get('date') or date.today().isoformat()
+    try:
+        selected_date = date.fromisoformat(date_str)
+    except ValueError:
+        selected_date = datetime.fromisoformat(date_str).date()
+    
+    if request.method == 'GET':
+        log_form.timestamp.data = datetime.combine(selected_date, datetime.now().time())
+    
     if log_form.validate_on_submit():
-        urine_color = request.form['urine_color']
-        urine_comment = request.form['urine_comment']
-        log = UrineEntry(user_id=current_user.id, urine_color=urine_color, urine_comment=urine_comment)
+        timestamp = log_form.timestamp.data.replace(tzinfo=timezone.utc)
+        urine_color = log_form.urine_color.data
+        urine_comment = log_form.urine_comment.data
+        log = UrineEntry(user_id=current_user.id, urine_color=urine_color, urine_comment=urine_comment, timestamp=timestamp)
         db.session.add(log)
         db.session.commit()
-        return redirect(url_for('main.log_urine', date=request.args.get('date') or date.today().isoformat()))
+        return redirect(url_for('main.log_urine', date=log_form.timestamp.data.date().isoformat()))
     
-    date_str = request.args.get('date') or date.today().isoformat()
-    selected_date = date.fromisoformat(date_str)
-    
-    start = datetime.combine(selected_date, time.min)
-    end = datetime.combine(selected_date, time.max)
+    start = datetime.combine(selected_date, time.min, tzinfo=timezone.utc)
+    end = datetime.combine(selected_date, time.max, tzinfo=timezone.utc)
     
     urine_logs = current_user.get_urine_entries(start_date=start, end_date=end)
-    return render_template('log_urine.html', form=log_form, urine_logs=urine_logs, selected_date=date_str)
+    return render_template('log_urine.html', form=log_form, urine_logs=urine_logs, selected_date=selected_date.isoformat())
 
 @main.route('/hide-module/<module_name>', methods=['POST'])
 @login_required

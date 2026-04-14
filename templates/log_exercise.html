@@ -48,7 +48,7 @@
   <div class="offcanvas-body">
     <form method="POST">
       <!-- {{ render_form(form) }} can also replace the render_field() lines below, but I wanted to customize the submit button with Bootstrap classes -->
-      {{ form.csrf_token() }} {{ render_field(form.exercise_name) }} {{ render_field(form.minutes) }} {{ render_field(form.calories_burned) }} {{ render_field(form.submit, class='btn btn-secondary') }}
+      {{ form.csrf_token() }} {{ render_field(form.timestamp, class='form-control') }} {{ render_field(form.exercise_name) }} {{ render_field(form.minutes) }} {{ render_field(form.calories_burned) }} {{ render_field(form.submit, class='btn btn-secondary') }}
     </form>
   </div>
 </div>

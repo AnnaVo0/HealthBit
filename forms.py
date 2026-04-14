@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Length, ValidationError, NumberRange
-from wtforms.fields import StringField, PasswordField, BooleanField, SubmitField, IntegerField
+from wtforms.fields import StringField, PasswordField, BooleanField, SubmitField, IntegerField, DateTimeLocalField
+from datetime import datetime
 from database import db, User
 from config import *
 
@@ -26,6 +27,7 @@ class RegisterForm(FlaskForm):
             raise ValidationError('Passwords must match.')
         
 class FoodLogForm(FlaskForm):
+    timestamp = DateTimeLocalField('Date & Time', format='%Y-%m-%dT%H:%M', default=datetime.now)
     food_name = StringField('Enter a food item or meal', validators=[DataRequired(), Length(logInputMinLen, logInputMaxLen)])
     calories = IntegerField('Enter a calorie amount', validators=[DataRequired(), NumberRange(0)])
     submit = SubmitField('Log Food')
@@ -37,6 +39,7 @@ class SleepLogForm(FlaskForm):
     submit = SubmitField('Log Sleep')
 
 class HydrationLogForm(FlaskForm):
+    timestamp = DateTimeLocalField('Date & Time', format='%Y-%m-%dT%H:%M', default=datetime.now)
     fluid_type = StringField('Enter a fluid type', validators=[DataRequired(), Length(logInputMinLen, logInputMaxLen)])
     amount_ml = IntegerField('Enter the amount drank (mL) ', validators=[DataRequired(), NumberRange(0)])
     caloric_val =  IntegerField('Enter caloric value', validators=[DataRequired(), NumberRange(0)])
@@ -50,12 +53,14 @@ class MedicationLogForm(FlaskForm):
     submit = SubmitField('Log Medication')
 
 class ExerciseLogForm(FlaskForm):
+    timestamp = DateTimeLocalField('Date & Time', format='%Y-%m-%dT%H:%M', default=datetime.now)
     exercise_name = StringField('Enter name of exercise:', validators=[DataRequired(), Length(logInputMinLen, logInputMaxLen)])
     minutes = IntegerField('Enter the duration of exercise (min) ', validators=[DataRequired(), NumberRange(0)])
     calories_burned = IntegerField('Enter amount of calories burned', validators=[DataRequired(), NumberRange(0)])
     submit = SubmitField('Log Exercise')
 
 class BowelLogForm(FlaskForm):
+    timestamp = DateTimeLocalField('Date & Time', format='%Y-%m-%dT%H:%M', default=datetime.now)
     stool_type = StringField('Enter type of bowel movement: ', validators=[DataRequired(), Length(logInputMinLen, logInputMaxLen)])
     stool_color = StringField('Enter color of stool: ', validators=[DataRequired(), Length(logInputMinLen, logInputMaxLen)])
     stool_description = StringField('Enter comment about stool (optional) : ', validators=[Length(0, logInputMaxLen)])
@@ -66,6 +71,7 @@ class WeightLogForm(FlaskForm):
     submit = SubmitField('Log Weight')
 
 class UrineLogForm(FlaskForm):
+    timestamp = DateTimeLocalField('Date & Time', format='%Y-%m-%dT%H:%M', default=datetime.now)
     urine_color = StringField('Enter color of urine: ', validators=[DataRequired(), Length(logInputMinLen, logInputMaxLen)])
     urine_comment = StringField('Enter a comment (frequency, sensation)', validators=[Length(0, logInputMaxLen)])
     submit = SubmitField('Log Urine')
