@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(pwdMaxLen), nullable=False)
     
     entries = relationship("Entry", backref="user", cascade="all, delete-orphan")
+    hidden_modules = relationship("HiddenModule", backref="user_hidden", cascade="all, delete-orphan")
     
     def get_food_entries(self, start_date=None, end_date=None):
         query = FoodEntry.query.filter_by(user_id=self.id)
@@ -133,7 +134,6 @@ class BowelMovementEntry(Entry):
 
     __mapper_args__ = {"polymorphic_identity": "bowel_movement"}
 
-
 class UrineEntry(Entry):
     __tablename__ = "urine_entries"
     id = db.Column(db.Integer, db.ForeignKey("entries.id"), primary_key=True)
@@ -149,12 +149,6 @@ class SleepEntry(Entry):
     sleep_quality = db.Column(db.String(100), nullable=False)
     sleep_comment = db.Column(db.String(100), nullable=False)
 
-    def __init__(self, user_id, sleep_duration, sleep_quality, sleep_comment):
-        self.user_id = user_id
-        self.sleep_duration = sleep_duration
-        self.sleep_quality = sleep_quality
-        self.sleep_comment = sleep_comment
-
     __mapper_args__ = {"polymorphic_identity": "sleep"}
 
 class MedicationEntry(Entry):
@@ -165,11 +159,11 @@ class MedicationEntry(Entry):
     frequency = db.Column(db.String(100), nullable=False)
     comment = db.Column(db.String(100), nullable=True)
 
-    def __init__(self, user_id, med_name, amount_mg, frequency, comment):
-        self.user_id = user_id
-        self.med_name = med_name
-        self.amount_mg = amount_mg
-        self.frequency = frequency
-        self.comment = comment
-
     __mapper_args__ = {"polymorphic_identity": "medication"}
+
+class HiddenModule(db.Model):
+    __tablename__ = "hidden_modules"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    module_name = db.Column(db.String(50), nullable=False)

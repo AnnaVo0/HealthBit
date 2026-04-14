@@ -6,12 +6,13 @@
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h1>Welcome, {{ current_user.username }}!</h1>
-    <button class="btn btn-secondary">+ Add Module</button>
+    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addModuleModal">+ Add Module</button>
 </div>
 
 <div class="row g-4">
 
     <!-- Food Module -->
+    {% if 'food' not in hidden %}
     <div class="col-md-3">
         <div class="card h-100" style="background-color: #FFEB99;">
             <div class="card-body text-center">
@@ -26,12 +27,39 @@
                 <a class="btn btn-sm btn-secondary" href="{{url_for('main.log_food')}}" role="button">Log Food</a>
             </div>
             <div class="card-footer bg-transparent border-0 text-end">
-                <button class="btn btn-sm btn-outline-dark">Remove</button>
+                <button class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#removeModal-food">Remove</button>
             </div>
         </div>
     </div>
+    <!-- Food Remove Modal -->
+    <div class="modal fade" id="removeModal-food" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Remove Food Module</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    What would you like to do? You can either hide the module from your dashboard, or you can hide it and delete all its data.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                    <form action="{{ url_for('main.hide_module', module_name='food') }}" method="POST" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit" class="btn btn-secondary">Hide</button>
+                    </form>
+                    <form action="{{ url_for('main.hide_and_delete_module', module_name='food') }}" method="POST" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit" class="btn btn-secondary">Hide & Delete Data</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     <!-- Hydration Module -->
+    {% if 'hydration' not in hidden %}
     <div class="col-md-3">
         <div class="card h-100" style="background-color: #C1ECF8;">
             <div class="card-body text-center">
@@ -46,12 +74,39 @@
                 <a class="btn btn-sm btn-secondary" href="{{url_for('main.log_hydration')}}" role="button">Log Hydration</a>
             </div>
             <div class="card-footer bg-transparent border-0 text-end">
-                <button class="btn btn-sm btn-outline-dark">Remove</button>
+                <button class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#removeModal-hydration">Remove</button>
             </div>
         </div>
     </div>
+    <!-- Hydration Remove Modal -->
+    <div class="modal fade" id="removeModal-hydration" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Remove Hydration Module</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    What would you like to do? You can either hide the module from your dashboard, or you can hide it and delete all its data.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                    <form action="{{ url_for('main.hide_module', module_name='hydration') }}" method="POST" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit" class="btn btn-secondary">Hide</button>
+                    </form>
+                    <form action="{{ url_for('main.hide_and_delete_module', module_name='hydration') }}" method="POST" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit" class="btn btn-secondary">Hide & Delete Data</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     <!-- Weight Module -->
+    {% if 'weight' not in hidden %}
     <div class="col-md-3">
         <div class="card h-100" style="background-color: #F4D6FF;">
             <div class="card-body text-center">
@@ -67,12 +122,39 @@
                  <a class="btn btn-sm btn-secondary" href="{{url_for('main.log_weight')}}" role="button">Log Weight</a>
             </div>
             <div class="card-footer bg-transparent border-0 text-end">
-                <button class="btn btn-sm btn-outline-dark">Remove</button>
+                <button class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#removeModal-weight">Remove</button>
             </div>
         </div>
     </div>
+    <!-- Weight Remove Modal -->
+    <div class="modal fade" id="removeModal-weight" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Remove Weight Module</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    What would you like to do? You can either hide the module from your dashboard, or you can hide it and delete all its data.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                    <form action="{{ url_for('main.hide_module', module_name='weight') }}" method="POST" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit" class="btn btn-secondary">Hide</button>
+                    </form>
+                    <form action="{{ url_for('main.hide_and_delete_module', module_name='weight') }}" method="POST" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit" class="btn btn-secondary">Hide & Delete Data</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     <!-- Exercise Module -->
+    {% if 'exercise' not in hidden %}
     <div class="col-md-3">
         <div class="card h-100" style="background-color: #A9E3BF;">
             <div class="card-body text-center">
@@ -87,12 +169,39 @@
                 <a class="btn btn-sm btn-secondary" href="{{url_for('main.log_exercise')}}" role="button">Log Exercise</a>
             </div>
             <div class="card-footer bg-transparent border-0 text-end">
-                <button class="btn btn-sm btn-outline-dark">Remove</button>
+                <button class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#removeModal-exercise">Remove</button>
             </div>
         </div>
     </div>
+    <!-- Exercise Remove Modal -->
+    <div class="modal fade" id="removeModal-exercise" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Remove Exercise Module</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    What would you like to do? You can either hide the module from your dashboard, or you can hide it and delete all its data.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                    <form action="{{ url_for('main.hide_module', module_name='exercise') }}" method="POST" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit" class="btn btn-secondary">Hide</button>
+                    </form>
+                    <form action="{{ url_for('main.hide_and_delete_module', module_name='exercise') }}" method="POST" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit" class="btn btn-secondary">Hide & Delete Data</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     <!-- Bowel Movement Module -->
+    {% if 'bowel' not in hidden %}
     <div class="col-md-3">
         <div class="card h-100" style="background-color: #FFCC99;">
             <div class="card-body text-center">
@@ -107,12 +216,39 @@
                 <a class="btn btn-sm btn-secondary" href="{{url_for('main.log_bowel')}}" role="button">Log Bowel Movement</a>
             </div>
             <div class="card-footer bg-transparent border-0 text-end">
-                <button class="btn btn-sm btn-outline-dark">Remove</button>
+                <button class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#removeModal-bowel">Remove</button>
             </div>
         </div>
     </div>
+    <!-- Bowel Movement Remove Modal -->
+    <div class="modal fade" id="removeModal-bowel" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Remove Bowel Movement Module</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    What would you like to do? You can either hide the module from your dashboard, or you can hide it and delete all its data.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                    <form action="{{ url_for('main.hide_module', module_name='bowel') }}" method="POST" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit" class="btn btn-secondary">Hide</button>
+                    </form>
+                    <form action="{{ url_for('main.hide_and_delete_module', module_name='bowel') }}" method="POST" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit" class="btn btn-secondary">Hide & Delete Data</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     <!-- Sleep Module -->
+    {% if 'sleep' not in hidden %}
     <div class="col-md-3">
         <div class="card h-100" style="background-color: #B9B8FF;">
             <div class="card-body text-center">
@@ -127,12 +263,39 @@
                 <a class="btn btn-sm btn-secondary" href="{{url_for('main.log_sleep')}}" role="button">Log Sleep</a>
             </div>
             <div class="card-footer bg-transparent border-0 text-end">
-                <button class="btn btn-sm btn-outline-dark">Remove</button>
+                <button class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#removeModal-sleep">Remove</button>
             </div>
         </div>
     </div>
+    <!-- Sleep Remove Modal -->
+    <div class="modal fade" id="removeModal-sleep" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Remove Sleep Module</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    What would you like to do? You can either hide the module from your dashboard, or you can hide it and delete all its data.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                    <form action="{{ url_for('main.hide_module', module_name='sleep') }}" method="POST" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit" class="btn btn-secondary">Hide</button>
+                    </form>
+                    <form action="{{ url_for('main.hide_and_delete_module', module_name='sleep') }}" method="POST" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit" class="btn btn-secondary">Hide & Delete Data</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     <!-- Urination Module -->
+    {% if 'urine' not in hidden %}
     <div class="col-md-3">
         <div class="card h-100" style="background-color: #E4F7BF;">
             <div class="card-body text-center">
@@ -147,12 +310,39 @@
                 <a class="btn btn-sm btn-secondary" href="{{url_for('main.log_urine')}}" role="button">Log Urine</a>
             </div>
             <div class="card-footer bg-transparent border-0 text-end">
-                <button class="btn btn-sm btn-outline-dark">Remove</button>
+                <button class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#removeModal-urine">Remove</button>
             </div>
         </div>
     </div>
+    <!-- Urination Remove Modal -->
+    <div class="modal fade" id="removeModal-urine" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Remove Urination Module</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    What would you like to do? You can either hide the module from your dashboard, or you can hide it and delete all its data.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                    <form action="{{ url_for('main.hide_module', module_name='urine') }}" method="POST" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit" class="btn btn-secondary">Hide</button>
+                    </form>
+                    <form action="{{ url_for('main.hide_and_delete_module', module_name='urine') }}" method="POST" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit" class="btn btn-secondary">Hide & Delete Data</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     <!-- Medications Module -->
+    {% if 'medication' not in hidden %}
     <div class="col-md-3">
         <div class="card h-100" style="background-color: #ffd6d6;">
             <div class="card-body text-center">
@@ -167,10 +357,130 @@
                 <a class="btn btn-sm btn-secondary" href="{{url_for('main.log_medication')}}" role="button">Log Medication</a>
             </div>
             <div class="card-footer bg-transparent border-0 text-end">
-                <button class="btn btn-sm btn-outline-dark">Remove</button>
+                <button class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#removeModal-medication">Remove</button>
             </div>
         </div>
     </div>
+    <!-- Medications Remove Modal -->
+    <div class="modal fade" id="removeModal-medication" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Remove Medications Module</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    What would you like to do? You can either hide the module from your dashboard, or you can hide it and delete all its data.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                    <form action="{{ url_for('main.hide_module', module_name='medication') }}" method="POST" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit" class="btn btn-secondary">Hide</button>
+                    </form>
+                    <form action="{{ url_for('main.hide_and_delete_module', module_name='medication') }}" method="POST" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit" class="btn btn-secondary">Hide & Delete Data</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
 </div>
+
+<!-- Add Module Modal -->
+<div class="modal fade" id="addModuleModal" tabindex="-1" aria-labelledby="addModuleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModuleModalLabel">Add a Module</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if hidden %}
+                    {% if 'food' in hidden %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>Food</span>
+                        <form action="{{ url_for('main.add_module', module_name='food') }}" method="POST">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <button type="submit" class="btn btn-sm btn-secondary">Add</button>
+                        </form>
+                    </div>
+                    {% endif %}
+                    {% if 'hydration' in hidden %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>Hydration</span>
+                        <form action="{{ url_for('main.add_module', module_name='hydration') }}" method="POST">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <button type="submit" class="btn btn-sm btn-secondary">Add</button>
+                        </form>
+                    </div>
+                    {% endif %}
+                    {% if 'weight' in hidden %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>Weight</span>
+                        <form action="{{ url_for('main.add_module', module_name='weight') }}" method="POST">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <button type="submit" class="btn btn-sm btn-secondary">Add</button>
+                        </form>
+                    </div>
+                    {% endif %}
+                    {% if 'exercise' in hidden %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>Exercise</span>
+                        <form action="{{ url_for('main.add_module', module_name='exercise') }}" method="POST">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <button type="submit" class="btn btn-sm btn-secondary">Add</button>
+                        </form>
+                    </div>
+                    {% endif %}
+                    {% if 'bowel' in hidden %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>Bowel Movement</span>
+                        <form action="{{ url_for('main.add_module', module_name='bowel') }}" method="POST">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <button type="submit" class="btn btn-sm btn-secondary">Add</button>
+                        </form>
+                    </div>
+                    {% endif %}
+                    {% if 'sleep' in hidden %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>Sleep</span>
+                        <form action="{{ url_for('main.add_module', module_name='sleep') }}" method="POST">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <button type="submit" class="btn btn-sm btn-secondary">Add</button>
+                        </form>
+                    </div>
+                    {% endif %}
+                    {% if 'urine' in hidden %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>Urination</span>
+                        <form action="{{ url_for('main.add_module', module_name='urine') }}" method="POST">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <button type="submit" class="btn btn-sm btn-secondary">Add</button>
+                        </form>
+                    </div>
+                    {% endif %}
+                    {% if 'medication' in hidden %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>Medications</span>
+                        <form action="{{ url_for('main.add_module', module_name='medication') }}" method="POST">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <button type="submit" class="btn btn-sm btn-secondary">Add</button>
+                        </form>
+                    </div>
+                    {% endif %}
+                {% else %}
+                    <p class="text-muted">All modules are already on your dashboard.</p>
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
