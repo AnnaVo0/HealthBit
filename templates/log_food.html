@@ -1,37 +1,40 @@
-{% extends 'base.html' %} 
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Your Food Logs</h1>
+  <h1>Your Food Logs</h1>
+
+  <div class="d-flex align-items-center">
+    <form method="GET" class="me-3">
+      <input type="date" name="date" class="form-control" onchange="this.form.submit()" value="{{ selected_date }}" />
+    </form>
     <button class="btn btn-secondary" data-bs-toggle="offcanvas" href="#logForm" role="button" aria-controls="logForm">+ Add Log</button>
+  </div>
 </div>
 
-    <div>
-    <table class="table">
-        <thread>
-        <tr>
-         <th scope="col"> Food </th>
-         <th scope="col"> Calories</th>
-        </tr>
-        </thread>
-        <tbody>
-        {% for log in food_logs %}
-        <tr>
-            <td> {{ log.food_name }}</td>
-            <td> {{ log.calories }}</td>
-        </tr>
-        {% else %}
-            <tr>
-                <td colspan="2"> No food logs yet. </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    </div>
+<div>
+  <table class="table">
+    <thread>
+      <tr>
+        <th scope="col">Food</th>
+        <th scope="col">Calories</th>
+      </tr>
+    </thread>
+    <tbody>
+      {% for log in food_logs %}
+      <tr>
+        <td>{{ log.food_name }}</td>
+        <td>{{ log.calories }}</td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="2">No food logs yet.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
-    <!-- Above is table format code from Bootstrap site. Wabt to make a 'delete' button next to each log near end of row -->
-
-
+<!-- Above is table format code from Bootstrap site. Wabt to make a 'delete' button next to each log near end of row -->
 
 <!-- On (+ Add Log) button press, log creation form appears from the bottom of the page -->
 <div class="offcanvas offcanvas-bottom mx-auto w-25 p-2 rounded-top" style="height: 83%" tabindex="-1" id="logForm" aria-labelledby="logFormLabel">
@@ -41,11 +44,8 @@
   </div>
   <div class="offcanvas-body">
     <form method="POST">
-        <!-- {{ render_form(form) }} can also replace the render_field() lines below, but I wanted to customize the submit button with Bootstrap classes -->
-        {{ form.csrf_token() }}
-        {{ render_field(form.food_name) }}
-        {{ render_field(form.calories) }}
-        {{ render_field(form.submit, class='btn btn-secondary') }}
+      <!-- {{ render_form(form) }} can also replace the render_field() lines below, but I wanted to customize the submit button with Bootstrap classes -->
+      {{ form.csrf_token() }} {{ render_field(form.food_name) }} {{ render_field(form.calories) }} {{ render_field(form.submit, class='btn btn-secondary') }}
     </form>
   </div>
 </div>

@@ -1,24 +1,11 @@
-{% from 'bootstrap5/nav.html' import render_nav_item %}
-{% from 'bootstrap5/utils.html' import render_messages %}
-{% from 'bootstrap5/form.html' import render_form, render_field %}
-
-{#
-    base.html will extend every other HTML page in the app. It is essentially just the navbar, then the main section of the page
-    -gets overriden by other child pages.
-
-    block content and endblock is Flask's way of letting other pages extended from this page override
-    -that particular "block" of the page. Aka, when you see block content and endblock in curly braces and % symbols in other pages extended from this page, like login.html or register.html,
-    -whatever is inside them will replace the block content of this page (i.e., their contents will be put inside main here and display below the navbar).
-#}
+{% from 'bootstrap5/nav.html' import render_nav_item %} {% from 'bootstrap5/utils.html' import render_messages %} {% from 'bootstrap5/form.html' import render_form, render_field %} {# base.html will extend every other HTML page in the app. It is essentially just the navbar, then the main section of the page -gets overriden by other child pages. block content and endblock is Flask's way of letting other pages extended from this page override -that particular "block" of the page. Aka, when you see block content and endblock in curly braces and % symbols in other pages extended from this page, like login.html or register.html, -whatever is inside them will replace the block content of this page (i.e., their contents will be put inside main here and display below the navbar). #}
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    {{ bootstrap.load_css() }}
-    {{ bootstrap.load_icon_font_css() }}
-    {# Sets default dynamic title to HealthBit. Child pages can override with {% block title %}Page Name{% endblock %} #}
+    {{ bootstrap.load_css() }} {{ bootstrap.load_icon_font_css() }} {# Sets default dynamic title to HealthBit. Child pages can override with {% block title %}Page Name{% endblock %} #}
     <title>{% block title %}HealthBit{% endblock %}</title>
     <style>
       pre {
@@ -41,32 +28,27 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           {% if current_user.is_authenticated %}
-            <ul class="navbar-nav mr-auto">
-              {{ render_nav_item('main.dashboard', 'Dashboard') }}
-            </ul>
-            <ul class="navbar-nav ms-auto">
-              {{ render_nav_item('main.logout', 'Logout') }}
-            </ul>
+          <ul class="navbar-nav mr-auto">
+            {{ render_nav_item('main.dashboard', 'Dashboard') }}
+          </ul>
+          <ul class="navbar-nav ms-auto">
+            {{ render_nav_item('main.logout', 'Logout') }}
+          </ul>
           {% else %}
-            <ul class="navbar-nav mr-auto">
-              {{ render_nav_item('main.index', 'Home') }}
-              {{ render_nav_item('main.login', 'Login') }}
-              {{ render_nav_item('main.register', 'Register') }}
-            </ul>
-            <ul class="navbar-nav ms-auto">
-              <li class="nav-item"><a class="nav-link" href="https://bootstrap-flask.readthedocs.io/" target="_blank">Documentation</a></li>
-              <li class="nav-item"><a class="nav-link" href="https://getbootstrap.com/docs/5.1/getting-started/introduction/" target="_blank">Bootstrap Documentation</a></li>
-              <li class="nav-item"><a class="nav-link" href="https://github.com/helloflask/bootstrap-flask" target="_blank">GitHub</a></li>
-            </ul>
+          <ul class="navbar-nav mr-auto">
+            {{ render_nav_item('main.index', 'Home') }} {{ render_nav_item('main.login', 'Login') }} {{ render_nav_item('main.register', 'Register') }}
+          </ul>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="https://bootstrap-flask.readthedocs.io/" target="_blank">Documentation</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://getbootstrap.com/docs/5.1/getting-started/introduction/" target="_blank">Bootstrap Documentation</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://github.com/helloflask/bootstrap-flask" target="_blank">GitHub</a></li>
+          </ul>
           {% endif %}
         </div>
       </div>
     </nav>
 
-    <main class="container">
-      {{ render_messages(container=False, dismissible=True, dismiss_animate=True) }}
-      {% block content %}{% endblock %}
-    </main>
+    <main class="container">{{ render_messages(container=False, dismissible=True, dismiss_animate=True) }} {% block content %}{% endblock %}</main>
 
     {{ bootstrap.load_js() }}
   </body>

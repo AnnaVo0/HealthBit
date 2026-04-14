@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_user, logout_user, login_required, current_user
+from datetime import date, datetime, time, timezone
 from database import db, User, FoodEntry, SleepEntry, HydrationEntry, MedicationEntry, ExerciseEntry, \
     BowelMovementEntry, WeightEntry, UrineEntry, HiddenModule
 from forms import LoginForm, RegisterForm, FoodLogForm, SleepLogForm, HydrationLogForm, MedicationLogForm, \
@@ -81,9 +82,16 @@ def log_food():
         log = FoodEntry(user_id=current_user.id, food_name=food_name, calories=calories)
         db.session.add(log)
         db.session.commit()
+        return redirect(url_for('main.log_food', date=request.args.get('date') or date.today().isoformat()))
+        
+    date_str = request.args.get('date') or date.today().isoformat()
+    selected_date = date.fromisoformat(date_str)
+    
+    start = datetime.combine(selected_date, time.min)
+    end = datetime.combine(selected_date, time.max)
 
-    food_logs = current_user.get_food_entries()
-    return render_template('log_food.html', form=log_form, food_logs=food_logs)
+    food_logs = current_user.get_food_entries(start_date=start, end_date=end)
+    return render_template('log_food.html', form=log_form, food_logs=food_logs, selected_date=date_str)
 
 @main.route('/log-sleep', methods=['GET', 'POST'])
 @login_required
@@ -112,9 +120,16 @@ def log_hydration():
         log = HydrationEntry(user_id=current_user.id, fluid_type=fluid_type, amount_ml=amount_ml, caloric_val=caloric_val)
         db.session.add(log)
         db.session.commit()
+        return redirect(url_for('main.log_hydration', date=request.args.get('date') or date.today().isoformat()))
+        
+    date_str = request.args.get('date') or date.today().isoformat()
+    selected_date = date.fromisoformat(date_str)
+    
+    start = datetime.combine(selected_date, time.min)
+    end = datetime.combine(selected_date, time.max)
 
-    hydration_logs = current_user.get_hydration_entries()
-    return render_template('log_hydration.html', form=log_form, hydration_logs=hydration_logs)
+    hydration_logs = current_user.get_hydration_entries(start_date=start, end_date=end)
+    return render_template('log_hydration.html', form=log_form, hydration_logs=hydration_logs, selected_date=date_str)
 
 @main.route('/log-medication', methods=['GET', 'POST'])
 @login_required
@@ -144,9 +159,16 @@ def log_exercise():
         log = ExerciseEntry(user_id=current_user.id, exercise_name=exercise_name, minutes=minutes, calories_burned=calories_burned)
         db.session.add(log)
         db.session.commit()
+        return redirect(url_for('main.log_exercise', date=request.args.get('date') or date.today().isoformat()))
+        
+    date_str = request.args.get('date') or date.today().isoformat()
+    selected_date = date.fromisoformat(date_str)
+    
+    start = datetime.combine(selected_date, time.min)
+    end = datetime.combine(selected_date, time.max)
 
-    exercise_logs = current_user.get_exercise_entries()
-    return render_template('log_exercise.html', form=log_form, exercise_logs=exercise_logs)
+    exercise_logs = current_user.get_exercise_entries(start_date=start, end_date=end)
+    return render_template('log_exercise.html', form=log_form, exercise_logs=exercise_logs, selected_date=date_str)
 
 
 @main.route('/log-bowel', methods=['GET', 'POST'])
@@ -160,9 +182,16 @@ def log_bowel():
         log = BowelMovementEntry(user_id=current_user.id, stool_type=stool_type, stool_color=stool_color, stool_description=stool_description)
         db.session.add(log)
         db.session.commit()
+        return redirect(url_for('main.log_bowel', date=request.args.get('date') or date.today().isoformat()))
+    
+    date_str = request.args.get('date') or date.today().isoformat()
+    selected_date = date.fromisoformat(date_str)
+    
+    start = datetime.combine(selected_date, time.min)
+    end = datetime.combine(selected_date, time.max)
 
-    bowel_logs = current_user.get_bowel_movement_entries()
-    return render_template('log_bowel.html', form=log_form, bowel_logs=bowel_logs)
+    bowel_logs = current_user.get_bowel_movement_entries(start_date=start, end_date=end)
+    return render_template('log_bowel.html', form=log_form, bowel_logs=bowel_logs, selected_date=date_str)
 
 @main.route('/log-weight', methods=['GET', 'POST'])
 @login_required
@@ -187,9 +216,16 @@ def log_urine():
         log = UrineEntry(user_id=current_user.id, urine_color=urine_color, urine_comment=urine_comment)
         db.session.add(log)
         db.session.commit()
-
-    urine_logs = current_user.get_urine_entries()
-    return render_template('log_urine.html', form=log_form, urine_logs=urine_logs)
+        return redirect(url_for('main.log_urine', date=request.args.get('date') or date.today().isoformat()))
+    
+    date_str = request.args.get('date') or date.today().isoformat()
+    selected_date = date.fromisoformat(date_str)
+    
+    start = datetime.combine(selected_date, time.min)
+    end = datetime.combine(selected_date, time.max)
+    
+    urine_logs = current_user.get_urine_entries(start_date=start, end_date=end)
+    return render_template('log_urine.html', form=log_form, urine_logs=urine_logs, selected_date=date_str)
 
 @main.route('/hide-module/<module_name>', methods=['POST'])
 @login_required

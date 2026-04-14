@@ -1,31 +1,30 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <div class="text-center mt-5">
-    <h1>HealthBit</h1>
-    <p class="lead text-muted">Your personal health tracking dashboard.</p>
+  <h1>HealthBit</h1>
+  <p class="lead text-muted">Your personal health tracking dashboard.</p>
 
-    <div class="mt-4">
-        <a href="{{ url_for('main.login') }}" class="btn btn-secondary me-2">Login</a>
-        <a href="{{ url_for('main.register') }}" class="btn btn-outline-secondary">Register</a>
-    </div>
+  <div class="mt-4">
+    <a href="{{ url_for('main.login') }}" class="btn btn-secondary me-2">Login</a>
+    <a href="{{ url_for('main.register') }}" class="btn btn-outline-secondary">Register</a>
+  </div>
 </div>
 
-<hr class="mt-5">
+<hr class="mt-5" />
 
 <div class="text-center mt-4">
-    <h5>Track patterns in your:</h5>
-    <div class="d-flex justify-content-center">
-        <ul class="text-start mt-3">
-            <li>Food & Calories</li>
-            <li>Water & Hydration</li>
-            <li>Weight</li>
-            <li>Exercise</li>
-            <li>Bowel Movements</li>
-            <li>Sleep</li>
-            <li>Urination</li>
-        </ul>
-    </div>
+  <h5>Track patterns in your:</h5>
+  <div class="d-flex justify-content-center">
+    <ul class="text-start mt-3">
+      <li>Food & Calories</li>
+      <li>Water & Hydration</li>
+      <li>Weight</li>
+      <li>Exercise</li>
+      <li>Bowel Movements</li>
+      <li>Sleep</li>
+      <li>Urination</li>
+    </ul>
+  </div>
 </div>
 
 <p class="text-end">This demo uses Bootstrap version 5.</p>
