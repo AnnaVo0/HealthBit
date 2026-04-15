@@ -1,35 +1,32 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Your Weight Logs</h1>
-    <button class="btn btn-secondary" data-bs-toggle="offcanvas" href="#logForm" role="button" aria-controls="logForm">+ Add Log</button>
+  <h1>Your Weight Logs</h1>
+  <button class="btn btn-secondary" data-bs-toggle="offcanvas" href="#logForm" role="button" aria-controls="logForm">+ Add Log</button>
 </div>
 
-    <div>
-    <table class="table">
-        <thread>
-        <tr>
-         <th scope="col"> Weight (lbs) </th>
-        </tr>
-        </thread>
-        <tbody>
-        {% for log in weight_logs %}
-        <tr>
-            <td> {{ log.weight_lbs }}</td>
-        </tr>
-        {% else %}
-            <tr>
-                <td colspan="1"> No weight logs yet. </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    </div>
+<div>
+  <table class="table">
+    <thread>
+      <tr>
+        <th scope="col">Weight (lbs)</th>
+      </tr>
+    </thread>
+    <tbody>
+      {% for log in weight_logs %}
+      <tr>
+        <td>{{ log.weight_lbs }}</td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="1">No weight logs yet.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
-    <!-- Above is table format code from Bootstrap site. Wabt to make a 'delete' button next to each log near end of row -->
-
-
+<!-- Above is table format code from Bootstrap site. Wabt to make a 'delete' button next to each log near end of row -->
 
 <!-- On (+ Add Log) button press, log creation form appears from the bottom of the page -->
 <div class="offcanvas offcanvas-bottom mx-auto w-25 p-2 rounded-top" style="height: 83%" tabindex="-1" id="logForm" aria-labelledby="logFormLabel">
@@ -39,10 +36,8 @@
   </div>
   <div class="offcanvas-body">
     <form method="POST">
-        <!-- {{ render_form(form) }} can also replace the render_field() lines below, but I wanted to customize the submit button with Bootstrap classes -->
-        {{ form.csrf_token() }}
-        {{ render_field(form.weight_lbs) }}
-        {{ render_field(form.submit, class='btn btn-secondary') }}
+      <!-- {{ render_form(form) }} can also replace the render_field() lines below, but I wanted to customize the submit button with Bootstrap classes -->
+      {{ form.csrf_token() }} {{ render_field(form.weight_lbs) }} {{ render_field(form.submit, class='btn btn-secondary') }}
     </form>
   </div>
 </div>
