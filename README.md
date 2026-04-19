@@ -52,7 +52,7 @@ Installation is seamless and easy using `pip`.
 
 1. Clone the repo
    ```sh
-   git clone git@github.com:AnnaVo0/HealthBit.git
+   git clone https://github.com/AnnaVo0/HealthBit.git
    ```
 2. Move to `HealthBit` if not in the project folder
    ```sh
@@ -102,14 +102,12 @@ Authors
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/jacobnickerson/dsa-3.svg?style=for-the-badge
-[contributors-url]: https://github.com/jacobnickerson/dsa-3/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/jacobnickerson/dsa-3.svg?style=for-the-badge
-[forks-url]: https://github.com/jacobnickerson/dsa-3/network/members
-[stars-shield]: https://img.shields.io/github/stars/jacobnickerson/dsa-3.svg?style=for-the-badge
-[stars-url]: https://github.com/jacobnickerson/dsa-3/stargazers
-[issues-shield]: https://img.shields.io/github/issues/jacobnickerson/dsa-3.svg?style=for-the-badge
-[issues-url]: https://github.com/jacobnickerson/dsa-3/issues
+[contributors-shield]: https://img.shields.io/github/contributors/AnnaVo0/HealthBit.svg?style=for-the-badge
+[contributors-url]: https:/https://github.com/AnnaVo0/HealthBit/graphs/contributors
+[stars-shield]: https://img.shields.io/github/stars/AnnaVo0/HealthBit.svg?style=for-the-badge
+[stars-url]: https://github.com/AnnaVo0/HealthBit/stargazers
+[issues-shield]: https://img.shields.io/github/issues/AnnaVo0/HealthBit.svg?style=for-the-badge
+[issues-url]: https://github.com/AnnaVo0/HealthBit/issues
 [Flask-logo]: https://img.shields.io/badge/Flask-20232A?style=for-the-badge&logo=Flask&logoColor=3BABC3
 [Flask-url]: https://flask.palletsprojects.com/en/stable/
 [Bootstrap-logo]: https://img.shields.io/badge/Bootstrap-20232A?style=for-the-badge&logo=Bootstrap&logoColor=7952B3
