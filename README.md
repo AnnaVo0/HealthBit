@@ -15,8 +15,6 @@
     Never fumble around looking for another health tracker app. Now supports health tracking for food, hydration, weight, exercise, bowel movement, sleep, urination, and medication logging.
     <br />
     <br />
-    <a href="https://https://github.com/AnnaVo0/HealthBit/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
-    ·
     <a href="https://github.com/AnnaVo0/HealthBit/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
@@ -24,7 +22,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://google.com) <!-- Placeholder link until we can properly deploy functional website >
+![Product Name Screen Shot](images/Dashboard.PNG)
 
 
 
@@ -57,9 +55,9 @@ Installation is seamless and easy using `pip`.
    git clone git@github.com:AnnaVo0/HealthBit.git
    ```
 2. Move to `HealthBit` if not in the project folder
-  ```sh
-  cd HealthBit
-  ```
+   ```sh
+   cd HealthBit
+   ```
 3. Install packages
    ```sh
    pip install -r requirements.txt
@@ -77,6 +75,8 @@ Installation is seamless and easy using `pip`.
 
 <!-- USAGE EXAMPLES -->
 ## Usage
+
+Users may enter logs on every module page, and have their data persistently kept across sessions.
 
 ![Add Food Log Screenshot](images/AddFoodLog.PNG)
 
@@ -110,7 +110,6 @@ Authors
 [stars-url]: https://github.com/jacobnickerson/dsa-3/stargazers
 [issues-shield]: https://img.shields.io/github/issues/jacobnickerson/dsa-3.svg?style=for-the-badge
 [issues-url]: https://github.com/jacobnickerson/dsa-3/issues
-[product-screenshot]: images/Dashboard.PNG
 [Flask-logo]: https://img.shields.io/badge/Flask-20232A?style=for-the-badge&logo=Flask&logoColor=3BABC3
 [Flask-url]: https://flask.palletsprojects.com/en/stable/
 [Bootstrap-logo]: https://img.shields.io/badge/Bootstrap-20232A?style=for-the-badge&logo=Bootstrap&logoColor=7952B3
