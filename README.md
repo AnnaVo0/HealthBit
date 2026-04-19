@@ -46,17 +46,25 @@
 
 Installation is seamless and easy using `pip`.
 
+### Prerequisites
+
+* Make sure `pip` is installed.
+
 ### Installation
 
 1. Clone the repo
    ```sh
    git clone git@github.com:AnnaVo0/HealthBit.git
    ```
-2. Install packages
+2. Move to `HealthBit` if not in the project folder
+  ```sh
+  cd HealthBit
+  ```
+3. Install packages
    ```sh
    pip install -r requirements.txt
    ```
-3. Run a local dev server to check out the project
+4. Run a local dev server to check out the project
    ```
    python app.py
    ```
