@@ -61,6 +61,7 @@ Installation is seamless and easy using `pip`.
    python app.py
    ```
    or
+   <br />
    ```
    flask run
    ```
@@ -78,7 +79,6 @@ Installation is seamless and easy using `pip`.
 <a href="https://github.com/AnnaVo0/HealthBit/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=AnnaVo0/HealthBit" />
 </a>
-Made with [contrib.rocks](https://contrib.rocks).
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
