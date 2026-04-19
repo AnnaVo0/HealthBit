@@ -5,7 +5,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/jacobnickerson/dsa-3">
+  <a href="https://github.com/AnnaVo0/HealthBit">
     <img src="images/Logo.png" alt="Logo" width="668" height="191">
   </a>
 
