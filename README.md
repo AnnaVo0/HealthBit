@@ -22,6 +22,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
+View installation steps below and use the app for yourself! Currently supports up to 8 different health modules for tracking.
+
 ![Product Name Screen Shot](images/Dashboard.PNG)
 
 
@@ -103,7 +105,7 @@ Authors
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/AnnaVo0/HealthBit.svg?style=for-the-badge
-[contributors-url]: https:/https://github.com/AnnaVo0/HealthBit/graphs/contributors
+[contributors-url]: https://github.com/AnnaVo0/HealthBit/graphs/contributors
 [stars-shield]: https://img.shields.io/github/stars/AnnaVo0/HealthBit.svg?style=for-the-badge
 [stars-url]: https://github.com/AnnaVo0/HealthBit/stargazers
 [issues-shield]: https://img.shields.io/github/issues/AnnaVo0/HealthBit.svg?style=for-the-badge
